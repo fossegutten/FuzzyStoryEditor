@@ -1,0 +1,72 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://DialogEditor.gd" type="Script" id=1]
+
+[node name="DialogEditor" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+margin_right = 1024.0
+margin_bottom = 20.0
+
+[node name="Button" type="Button" parent="VBox/HBox"]
+margin_right = 46.0
+margin_bottom = 20.0
+text = "Hello"
+
+[node name="HSeparator" type="HSeparator" parent="VBox"]
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 28.0
+
+[node name="HBox2" type="HBoxContainer" parent="VBox"]
+margin_top = 32.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox2"]
+margin_right = 75.0
+margin_bottom = 568.0
+
+[node name="AddNodeButton" type="Button" parent="VBox/HBox2/VBox"]
+margin_right = 75.0
+margin_bottom = 20.0
+text = "Add Node"
+
+[node name="VSeparator" type="VSeparator" parent="VBox/HBox2"]
+margin_left = 79.0
+margin_right = 83.0
+margin_bottom = 568.0
+
+[node name="GraphEdit" type="GraphEdit" parent="VBox/HBox2"]
+margin_left = 87.0
+margin_right = 1024.0
+margin_bottom = 568.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_offset = Vector2( -50, -20 )
+
+[node name="GraphNode" type="GraphNode" parent="VBox/HBox2/GraphEdit"]
+margin_left = 50.0
+margin_top = 20.0
+margin_right = 352.0
+margin_bottom = 198.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="VBox/HBox2/VBox/AddNodeButton" to="." method="_on_AddNodeButton_pressed"]
