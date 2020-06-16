@@ -59,14 +59,6 @@ margin_bottom = 568.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_offset = Vector2( -50, -20 )
-
-[node name="GraphNode" type="GraphNode" parent="VBox/HBox2/GraphEdit"]
-margin_left = 50.0
-margin_top = 20.0
-margin_right = 352.0
-margin_bottom = 198.0
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 [connection signal="pressed" from="VBox/HBox2/VBox/AddNodeButton" to="." method="_on_AddNodeButton_pressed"]
+[connection signal="connection_request" from="VBox/HBox2/GraphEdit" to="." method="_on_GraphEdit_connection_request"]
+[connection signal="connection_to_empty" from="VBox/HBox2/GraphEdit" to="." method="_on_GraphEdit_connection_to_empty"]
