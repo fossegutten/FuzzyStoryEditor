@@ -15,7 +15,7 @@ func assign_node_id(node : DWNode) -> void:
 		new_id += 1
 	
 	node.set_node_id(new_id)
-	print("New id %s for node %s" % [new_id, node])
+#	print("New id %s for node %s" % [new_id, node])
 
 
 func get_dw_nodes() -> Array:
@@ -51,7 +51,7 @@ func _on_GraphEdit_connection_request(from, from_slot, to, to_slot):
 	
 	# max one target connection
 	for i in graph_edit.get_connection_list():
-		if i.from == from:
+		if i.from == from and i.from_port == from_slot:
 			graph_edit.disconnect_node(i.from, i.from_port, i.to, i.to_port)
 	
 	print(from, from_slot, to, to_slot)

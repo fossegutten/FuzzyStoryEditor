@@ -1,0 +1,12 @@
+[gd_scene format=2]
+
+[node name="DialogChoiceTextEdit" type="TextEdit" groups=[
+"choice_line",
+]]
+margin_right = 200.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 200, 20 )
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}
