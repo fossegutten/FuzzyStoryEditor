@@ -2,12 +2,12 @@ extends Control
 
 onready var graph_edit : GraphEdit = $VBox/HBox2/GraphEdit
 
-onready var dw_node : PackedScene = preload("res://nodes/DWNode.tscn")
+onready var dw_node : PackedScene = preload("res://nodes/DialogNode.tscn")
 
-func assign_node_id(node : DWNode) -> void:
+func assign_node_id(node : EventNode) -> void:
 	
 	var used_ids : Array = []
-	for i in get_dw_nodes():
+	for i in get_event_nodes():
 		used_ids.append(i.get_node_id())
 	
 	var new_id : int = 0
@@ -18,24 +18,30 @@ func assign_node_id(node : DWNode) -> void:
 #	print("New id %s for node %s" % [new_id, node])
 
 
-func get_dw_nodes() -> Array:
+func get_event_nodes() -> Array:
 	var nodes := []
 	for i in graph_edit.get_children():
-		if i is DWNode:
+		if i is EventNode:
 			nodes.append(i)
 	return nodes
 
+
 func _on_AddNodeButton_pressed():
-	var new : DWNode = dw_node.instance()
-	new.connect("close_request", self, "_on_DWNode_close_request", [new])
-	new.offset = get_dw_nodes().size() * Vector2(60, 40)
+	var new : EventNode = dw_node.instance()
+	new.connect("close_request", self, "_on_EventNode_close_request", [new])
+	new.offset = get_event_nodes().size() * Vector2(60, 40)
 	graph_edit.add_child(new)
 	assign_node_id(new)
-	new.name = "Node name %d" % [new.get_node_id()]
-	new.title = "Node title %d" % [new.get_node_id()]
+	
+	var node_name : String = "EventNode"
+	if "DialogNode".is_subsequence_ofi(new.name):
+		node_name = "DialogNode"
+	
+	new.name = "%s%d" % [node_name, new.get_node_id()]
+	new.title = "%s - ID: %d" % [node_name, new.get_node_id()]
 
 
-func _on_DWNode_close_request(requester : GraphNode) -> void:
+func _on_EventNode_close_request(requester : GraphNode) -> void:
 	
 	# remove all connections
 	for i in graph_edit.get_connection_list():

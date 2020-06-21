@@ -10,12 +10,12 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "GraphNode",
-"class": "DWNode",
+"class": "EventNode",
 "language": "GDScript",
-"path": "res://nodes/DWNode.gd"
+"path": "res://nodes/EventNode.gd"
 } ]
 _global_script_class_icons={
-"DWNode": ""
+"EventNode": ""
 }
 
 [application]
