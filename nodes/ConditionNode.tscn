@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://nodes/ConditionNode.gd" type="Script" id=1]
+
+[node name="ConditionNode" type="GraphNode"]
+margin_right = 291.0
+margin_bottom = 82.0
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color( 1, 1, 1, 1 )
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+out_color = Color( 1, 0.580392, 0.92549, 1 )
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 275.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 0, 22 )
+text = "condition"
+
+[node name="Label" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 47.0
+margin_right = 275.0
+margin_bottom = 61.0
+text = "True"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 62.0
+margin_right = 275.0
+margin_bottom = 76.0
+text = "False"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
