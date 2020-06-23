@@ -14,13 +14,51 @@ func _ready():
 	update_slots(choice_spin_box.value)
 
 
-func update_slots(choices : int) -> void:
-	assert(choices > 0)
-	
+func get_dialog_text() -> String:
+	return $DialogTextEdit.text
+
+
+func set_dialog_text(value : String) -> void:
+	$DialogTextEdit.text = value
+
+
+func get_character_text() -> String:
+	return $NameMoodHBox/CharacterLineEdit.text
+
+
+func set_character_text(value : String) -> void:
+	$NameMoodHBox/CharacterLineEdit.text = value
+
+
+func get_mood_text() -> String:
+	return $NameMoodHBox/MoodLineEdit.text
+
+
+func set_mood_text(value : String) -> void:
+	$NameMoodHBox/MoodLineEdit.text = value
+
+
+#func get_choices() -> Array:
+#	var choices : Array
+#
+#	for i in get_choice_lines():
+#		choices.append()
+#
+#	return choices
+
+
+func get_choice_lines() -> Array:
 	var choice_lines : Array = []
 	for i in get_children():
 		if i.is_in_group("choice_line"):
 			choice_lines.append(i)
+	return choice_lines
+
+
+func update_slots(choices : int) -> void:
+	assert(choices > 0)
+	
+	var choice_lines : Array = get_choice_lines()
 	
 	for i in choice_lines.size():
 		if i > choices - 1:

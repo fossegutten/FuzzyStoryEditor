@@ -51,13 +51,35 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 					elif c.from_port == 1:
 						node["next_id_false"] = target.get_node_id()
 		
+		elif "DialogNode".is_subsequence_ofi(n.name):
+			node["node_type"] = "DialogNode"
+			node["character"] = n.get_character_text()
+			node["mood"] = n.get_mood_text()
+			node["dialog"] = n.get_dialog_text()
+			
+			var choices : Array = []
+			
+			assert(n.get_choice_lines().size() == n.get_connection_output_count())
+			
+			for x in n.get_choice_lines().size():
+				var choice_text : String = n.get_choice_lines()[x].text
+				var choice_next_id : int = EMPTY
+				
+				for c in graph_edit.get_connection_list():
+					# it skips the port 0 if it's not open, and turns port 1 into 0, and so on
+					if c.from == n.name and c.from_port == x:
+#						if c.from_port == x:
+						var target : EventNode = graph_edit.get_node(c.to)
+						choice_next_id = target.get_node_id()
+				choices.append([choice_text, choice_next_id])
+			
+			node["choices"] = choices
+		
 		elif "FunctionCallNode".is_subsequence_ofi(n.name):
 			node["node_type"] = "FunctionCallNode"
 			node["class"] = n.get_class_text()
 			node["function"] = n.get_function_text()
 			
-#			var p = str2var(n.get_params_text())
-#			var p = Array((n.get_params_text()))
 			var params_string : String = n.get_params_text()
 			var params : Array = []
 			
@@ -75,7 +97,6 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 						assert(!("[".is_subsequence_ofi(p) or "]".is_subsequence_ofi(p)))
 					params.append(p)
 			
-#			for x in params:
 			node["params"] = params
 #			print("Type: %s value: %s" % [typeof(p), p])
 			
@@ -85,9 +106,6 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 				if c.from == n.name:
 					var target : EventNode = graph_edit.get_node(c.to)
 					node["next_id"] = target.get_node_id()
-			
-		elif "DialogNode".is_subsequence_ofi(n.name):
-			node["node_type"] = "DialogNode"
 		
 		elif "RandomNode".is_subsequence_ofi(n.name):
 			node["node_type"] = "RandomNode"
@@ -107,5 +125,5 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 		nodes.append(node)
 	
 	
-#	print(nodes)
+	print(nodes)
 	return nodes

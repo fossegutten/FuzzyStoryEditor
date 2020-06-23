@@ -54,65 +54,66 @@ out_color = Color( 0, 0.415686, 1, 1 )
 margin_left = 20.0
 margin_top = 42.0
 margin_right = 503.0
-margin_bottom = 64.0
+margin_bottom = 66.0
 
-[node name="NameLabel" type="Label" parent="NameMoodHBox"]
-margin_right = 62.0
-margin_bottom = 22.0
+[node name="CharacterLabel" type="Label" parent="NameMoodHBox"]
+margin_top = 1.0
+margin_right = 72.0
+margin_bottom = 23.0
 rect_min_size = Vector2( 0, 22 )
-text = "Speaker:  "
+text = "Character:  "
 valign = 2
 
-[node name="NameTextEdit" type="TextEdit" parent="NameMoodHBox"]
-margin_left = 66.0
-margin_right = 166.0
-margin_bottom = 22.0
+[node name="CharacterLineEdit" type="LineEdit" parent="NameMoodHBox"]
+margin_left = 76.0
+margin_right = 176.0
+margin_bottom = 24.0
 rect_min_size = Vector2( 100, 22 )
-text = "Player"
+placeholder_text = "Player"
 
 [node name="Control" type="Control" parent="NameMoodHBox"]
-margin_left = 170.0
-margin_right = 190.0
-margin_bottom = 22.0
+margin_left = 180.0
+margin_right = 200.0
+margin_bottom = 24.0
 rect_min_size = Vector2( 20, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NameLabel2" type="Label" parent="NameMoodHBox"]
-margin_left = 194.0
-margin_right = 242.0
-margin_bottom = 22.0
+[node name="MoodLabel" type="Label" parent="NameMoodHBox"]
+margin_left = 204.0
+margin_top = 1.0
+margin_right = 252.0
+margin_bottom = 23.0
 rect_min_size = Vector2( 0, 22 )
 text = "Mood:  "
 valign = 2
 
-[node name="NameTextEdit2" type="TextEdit" parent="NameMoodHBox"]
-margin_left = 246.0
-margin_right = 346.0
-margin_bottom = 22.0
+[node name="MoodLineEdit" type="LineEdit" parent="NameMoodHBox"]
+margin_left = 256.0
+margin_right = 356.0
+margin_bottom = 24.0
 rect_min_size = Vector2( 100, 22 )
-text = "neutral"
+placeholder_text = "neutral"
 
 [node name="HSeparator" type="HSeparator" parent="."]
 margin_left = 20.0
-margin_top = 69.0
+margin_top = 71.0
 margin_right = 503.0
-margin_bottom = 73.0
+margin_bottom = 75.0
 
 [node name="DialogTextEdit" type="TextEdit" parent="."]
 margin_left = 20.0
-margin_top = 78.0
+margin_top = 80.0
 margin_right = 503.0
-margin_bottom = 138.0
+margin_bottom = 140.0
 rect_min_size = Vector2( 0, 60 )
-text = "text"
 
 [node name="ChoicesHBox" type="HBoxContainer" parent="."]
 margin_left = 20.0
-margin_top = 143.0
+margin_top = 145.0
 margin_right = 503.0
-margin_bottom = 167.0
+margin_bottom = 169.0
 
 [node name="Label" type="Label" parent="ChoicesHBox"]
 margin_top = 5.0
@@ -131,7 +132,7 @@ align = 2
 
 [node name="DialogChoiceTextEdit" parent="." instance=ExtResource( 1 )]
 margin_left = 20.0
-margin_top = 172.0
+margin_top = 174.0
 margin_right = 503.0
-margin_bottom = 194.0
+margin_bottom = 198.0
 [connection signal="value_changed" from="ChoicesHBox/ChoicesSpinBox" to="." method="_on_ChoicesSpinBox_value_changed"]
