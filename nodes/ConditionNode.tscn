@@ -1,10 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://nodes/ConditionNode.gd" type="Script" id=1]
+[ext_resource path="res://nodes/assets/ConditionNode.stylebox" type="StyleBox" id=2]
+[ext_resource path="res://nodes/assets/ConditionNodeSelected.stylebox" type="StyleBox" id=3]
 
 [node name="ConditionNode" type="GraphNode"]
 margin_right = 291.0
 margin_bottom = 82.0
+custom_styles/frame = ExtResource( 2 )
+custom_styles/selectedframe = ExtResource( 3 )
+custom_constants/port_offset = 10
+custom_constants/separation = 5
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color( 1, 1, 1, 1 )
@@ -27,21 +33,21 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-out_color = Color( 1, 0.580392, 0.92549, 1 )
+out_color = Color( 1, 0.701961, 0, 1 )
 
-[node name="TextEdit" type="TextEdit" parent="."]
-margin_left = 16.0
-margin_top = 24.0
-margin_right = 275.0
-margin_bottom = 46.0
+[node name="TextEdit" type="LineEdit" parent="."]
+margin_left = 20.0
+margin_top = 42.0
+margin_right = 271.0
+margin_bottom = 66.0
 rect_min_size = Vector2( 0, 22 )
-text = "condition"
+placeholder_text = "condition"
 
 [node name="Label" type="Label" parent="."]
-margin_left = 16.0
-margin_top = 47.0
-margin_right = 275.0
-margin_bottom = 61.0
+margin_left = 20.0
+margin_top = 71.0
+margin_right = 271.0
+margin_bottom = 85.0
 text = "True"
 align = 2
 valign = 1
@@ -50,10 +56,10 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="."]
-margin_left = 16.0
-margin_top = 62.0
-margin_right = 275.0
-margin_bottom = 76.0
+margin_left = 20.0
+margin_top = 90.0
+margin_right = 271.0
+margin_bottom = 104.0
 text = "False"
 align = 2
 valign = 1

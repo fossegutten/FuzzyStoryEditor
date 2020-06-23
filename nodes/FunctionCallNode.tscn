@@ -1,0 +1,97 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://nodes/FunctionCallNode.gd" type="Script" id=1]
+[ext_resource path="res://nodes/assets/FunctionCallNode.stylebox" type="StyleBox" id=2]
+[ext_resource path="res://nodes/assets/FunctionCallNodeSelected.stylebox" type="StyleBox" id=3]
+
+[node name="FunctionCallNode" type="GraphNode"]
+margin_right = 332.0
+margin_bottom = 108.0
+custom_styles/frame = ExtResource( 2 )
+custom_styles/selectedframe = ExtResource( 3 )
+custom_constants/port_offset = 10
+custom_constants/separation = 5
+show_close = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color( 1, 1, 1, 1 )
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+out_color = Color( 0.0313726, 1, 0, 1 )
+
+[node name="HBoxClass" type="HBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 42.0
+margin_right = 312.0
+margin_bottom = 66.0
+
+[node name="Label" type="Label" parent="HBoxClass"]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 60, 0 )
+text = "Class"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxClass"]
+margin_left = 64.0
+margin_right = 292.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "Inventory"
+
+[node name="HBoxFunction" type="HBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 71.0
+margin_right = 312.0
+margin_bottom = 95.0
+
+[node name="Label" type="Label" parent="HBoxFunction"]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 60, 0 )
+text = "Function"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxFunction"]
+margin_left = 64.0
+margin_right = 292.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "give_item"
+
+[node name="HBoxParams" type="HBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 100.0
+margin_right = 312.0
+margin_bottom = 124.0
+
+[node name="Label" type="Label" parent="HBoxParams"]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 60, 0 )
+text = "Params"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxParams"]
+margin_left = 64.0
+margin_right = 292.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "[\"elixir\", 2]"

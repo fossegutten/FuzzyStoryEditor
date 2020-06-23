@@ -1,12 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://nodes/controls/DialogChoiceLine.tscn" type="PackedScene" id=1]
 [ext_resource path="res://nodes/DialogNode.gd" type="Script" id=2]
+[ext_resource path="res://nodes/assets/DialogNodeSelected.stylebox" type="StyleBox" id=3]
+[ext_resource path="res://nodes/assets/DialogNode.stylebox" type="StyleBox" id=4]
 
 [node name="DialogNode" type="GraphNode"]
 margin_right = 523.0
 margin_bottom = 211.0
-custom_constants/separation = 3
+custom_styles/frame = ExtResource( 4 )
+custom_styles/selectedframe = ExtResource( 3 )
+custom_constants/port_offset = 10
+custom_constants/separation = 5
 title = "DialogNode"
 show_close = true
 slot/0/left_enabled = false
@@ -43,17 +48,17 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+out_color = Color( 0, 0.415686, 1, 1 )
 
 [node name="NameMoodHBox" type="HBoxContainer" parent="."]
-margin_left = 16.0
-margin_top = 24.0
-margin_right = 507.0
-margin_bottom = 46.0
+margin_left = 20.0
+margin_top = 42.0
+margin_right = 503.0
+margin_bottom = 64.0
 
 [node name="NameLabel" type="Label" parent="NameMoodHBox"]
-margin_top = -1.0
 margin_right = 62.0
-margin_bottom = 21.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 0, 22 )
 text = "Speaker:  "
 valign = 2
@@ -76,9 +81,8 @@ __meta__ = {
 
 [node name="NameLabel2" type="Label" parent="NameMoodHBox"]
 margin_left = 194.0
-margin_top = -1.0
 margin_right = 242.0
-margin_bottom = 21.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 0, 22 )
 text = "Mood:  "
 valign = 2
@@ -91,24 +95,24 @@ rect_min_size = Vector2( 100, 22 )
 text = "neutral"
 
 [node name="HSeparator" type="HSeparator" parent="."]
-margin_left = 16.0
-margin_top = 49.0
-margin_right = 507.0
-margin_bottom = 53.0
+margin_left = 20.0
+margin_top = 69.0
+margin_right = 503.0
+margin_bottom = 73.0
 
 [node name="DialogTextEdit" type="TextEdit" parent="."]
-margin_left = 16.0
-margin_top = 56.0
-margin_right = 507.0
-margin_bottom = 116.0
+margin_left = 20.0
+margin_top = 78.0
+margin_right = 503.0
+margin_bottom = 138.0
 rect_min_size = Vector2( 0, 60 )
 text = "text"
 
 [node name="ChoicesHBox" type="HBoxContainer" parent="."]
-margin_left = 16.0
-margin_top = 119.0
-margin_right = 507.0
-margin_bottom = 143.0
+margin_left = 20.0
+margin_top = 143.0
+margin_right = 503.0
+margin_bottom = 167.0
 
 [node name="Label" type="Label" parent="ChoicesHBox"]
 margin_top = 5.0
@@ -126,8 +130,8 @@ value = 1.0
 align = 2
 
 [node name="DialogChoiceTextEdit" parent="." instance=ExtResource( 1 )]
-margin_left = 16.0
-margin_top = 146.0
-margin_right = 507.0
-margin_bottom = 168.0
+margin_left = 20.0
+margin_top = 172.0
+margin_right = 503.0
+margin_bottom = 194.0
 [connection signal="value_changed" from="ChoicesHBox/ChoicesSpinBox" to="." method="_on_ChoicesSpinBox_value_changed"]

@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="DialogWizard"
-run/main_scene="res://DialogEditor.tscn"
+run/main_scene="res://StoryEditor.tscn"
 config/icon="res://icon.png"
 
 [rendering]

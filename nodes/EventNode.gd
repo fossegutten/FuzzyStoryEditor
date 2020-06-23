@@ -3,6 +3,14 @@ class_name EventNode
 
 const SLOT := 0
 
+enum NodeType {
+	CHECKPOINT,
+	CONDITION,
+	DIALOG,
+	FUNCTION_CALL,
+	RANDOM
+}
+
 export(Color) var in_color := Color.white
 export(Color) var out_color := Color.white
 

@@ -10,7 +10,7 @@ const CHOICE_SLOT_START := 4
 func _ready():
 	show_close = true
 	resizable = true
-	set_slot(0, true, SLOT, Color.yellow, false, SLOT, Color.green)
+	set_slot(0, true, SLOT, in_color, false, SLOT, out_color)
 	update_slots(choice_spin_box.value)
 
 
@@ -44,7 +44,7 @@ func update_slots(choices : int) -> void:
 				add_child(c)
 #				move_child(c, CHOICE_SLOT_START + i)
 		
-		set_slot(CHOICE_SLOT_START + i, left_enabled, SLOT, Color.yellow, right_enabled, SLOT, Color.green)
+		set_slot(CHOICE_SLOT_START + i, left_enabled, SLOT, in_color, right_enabled, SLOT, out_color)
 
 
 func _on_child_tree_exited():
