@@ -1,0 +1,53 @@
+[
+	{
+		"checkpoint": "start",
+		"next_id": 1,
+		"node_id": 0,
+		"node_type": "CheckpointNode"
+	},
+	{
+		"class": "",
+		"function": "",
+		"next_id": -1,
+		"node_id": 2,
+		"node_type": "FunctionCallNode",
+		"params": [
+
+		]
+	},
+	{
+		"next_id_false": -1,
+		"next_id_true": -1,
+		"node_id": 3,
+		"node_type": "ConditionNode"
+	},
+	{
+		"node_id": 4,
+		"node_type": "RandomNode",
+		"outcomes": [
+			-1,
+			-1
+		]
+	},
+	{
+		"character": "",
+		"choices": [
+			{
+				"next_id": 2,
+				"text": "func"
+			},
+			{
+				"next_id": 3,
+				"text": "aasdcond"
+			},
+			{
+				"next_id": 4,
+				"text": "rand"
+			}
+		],
+		"dialog": "a",
+		"mood": "",
+		"node_id": 1,
+		"node_type": "DialogNode"
+	}
+]

@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "EventNode",
 "language": "GDScript",
 "path": "res://nodes/EventNode.gd"
+}, {
+"base": "Resource",
+"class": "FuzzyStory",
+"language": "GDScript",
+"path": "res://resources/FuzzyStory.gd"
 } ]
 _global_script_class_icons={
-"EventNode": ""
+"EventNode": "",
+"FuzzyStory": ""
 }
 
 [application]

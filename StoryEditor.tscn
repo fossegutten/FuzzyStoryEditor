@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://StoryEditor.gd" type="Script" id=1]
 [ext_resource path="res://StoryParser.gd" type="Script" id=2]
 [ext_resource path="res://StoryGraphEdit.gd" type="Script" id=3]
+[ext_resource path="res://StorySaveLoad.gd" type="Script" id=4]
 
 [node name="StoryEditor" type="Control"]
 anchor_right = 1.0
@@ -33,6 +34,12 @@ margin_left = 46.0
 margin_right = 87.0
 margin_bottom = 20.0
 text = "Save"
+
+[node name="ExportButton" type="Button" parent="VBox/HBox"]
+margin_left = 91.0
+margin_right = 143.0
+margin_bottom = 20.0
+text = "Export"
 
 [node name="HSeparator" type="HSeparator" parent="VBox"]
 margin_top = 24.0
@@ -76,8 +83,12 @@ margin_bottom = 20.0
 
 [node name="StoryParser" type="Node" parent="."]
 script = ExtResource( 2 )
+
+[node name="StorySaveLoad" type="Node" parent="."]
+script = ExtResource( 4 )
 [connection signal="pressed" from="VBox/HBox/LoadButton" to="." method="_on_LoadButton_pressed"]
 [connection signal="pressed" from="VBox/HBox/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="VBox/HBox/ExportButton" to="." method="_on_ExportButton_pressed"]
 [connection signal="connection_request" from="VBox/HBox2/StoryGraphEdit" to="." method="_on_GraphEdit_connection_request"]
 [connection signal="connection_to_empty" from="VBox/HBox2/StoryGraphEdit" to="." method="_on_GraphEdit_connection_to_empty"]
 [connection signal="gui_input" from="VBox/HBox2/StoryGraphEdit" to="." method="_on_GraphEdit_gui_input"]

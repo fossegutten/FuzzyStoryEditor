@@ -4,6 +4,11 @@ const EMPTY := -1
 
 #onready var graph_edit : GraphEdit = $"../VBox/HBox2/StoryGraphEdit"
 
+func array_to_graph(graph_edit : GraphEdit, event_nodes : Array) -> bool:
+	
+	
+	return false
+
 func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 	var nodes := []
 	
@@ -71,7 +76,7 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 #						if c.from_port == x:
 						var target : EventNode = graph_edit.get_node(c.to)
 						choice_next_id = target.get_node_id()
-				choices.append([choice_text, choice_next_id])
+				choices.append({"text": choice_text, "next_id": choice_next_id})
 			
 			node["choices"] = choices
 		

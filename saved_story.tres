@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://resources/FuzzyStory.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+story_nodes = [ {
+"class": "",
+"function": "",
+"metadata": {
+"node_name": "FunctionCallNode0",
+"position": Vector2( 10, 20 ),
+"size": Vector2( 332, 144 )
+},
+"next_id": -1,
+"node_id": 0,
+"node_type": "FunctionCallNode",
+"params": [  ]
+} ]

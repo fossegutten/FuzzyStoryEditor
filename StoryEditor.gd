@@ -82,16 +82,21 @@ func create_node(node_type : int):
 			return
 	
 	new_node.connect("close_request", self, "_on_EventNode_close_request", [new_node])
+	new_node.connect("resize_request", self, "_on_EventNode_resize_request", [new_node])
 	new_node.offset = new_node_offset
 	graph_edit.add_child(new_node)
 	assign_node_id(new_node)
 	
 	new_node.name = "%s%d" % [node_name, new_node.get_node_id()]
 	new_node.title = "%s - ID: %d" % [node_name, new_node.get_node_id()]
-	
+
+func _on_EventNode_resize_request(size : Vector2, requester : GraphNode) -> void:
+	if graph_edit.use_snap:
+		size = size.snapped(Vector2.ONE * graph_edit.snap_distance)
+	requester.rect_size = size
+
 
 func _on_EventNode_close_request(requester : GraphNode) -> void:
-	
 	# remove all connections
 	for i in graph_edit.get_connection_list():
 		if i.from == requester.name or i.to == requester.name:
@@ -152,8 +157,18 @@ func _on_AddNodePopupMenu_id_pressed(id):
 
 
 func _on_LoadButton_pressed():
+	var arr : Array = $StorySaveLoad.load_resource()
+	$StoryParser.arra
 	pass # Replace with function body.
 
 
 func _on_SaveButton_pressed():
-	$StoryParser.graph_to_array(graph_edit, get_event_nodes())
+	var arr : Array = $StoryParser.graph_to_array(graph_edit, get_event_nodes())
+	$StorySaveLoad.save_as_resource(arr)
+
+func _on_ExportButton_pressed():
+	# TODO 
+	var arr : Array = $StoryParser.graph_to_array(graph_edit, get_event_nodes())
+	$StorySaveLoad.save_as_json(arr)
+	# export as json?
+	pass
