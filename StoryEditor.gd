@@ -158,17 +158,14 @@ func _on_AddNodePopupMenu_id_pressed(id):
 
 func _on_LoadButton_pressed():
 	var arr : Array = $StorySaveLoad.load_resource()
-	$StoryParser.arra
-	pass # Replace with function body.
+	$StoryParser.array_to_graph(graph_edit, arr)
 
 
 func _on_SaveButton_pressed():
 	var arr : Array = $StoryParser.graph_to_array(graph_edit, get_event_nodes())
 	$StorySaveLoad.save_as_resource(arr)
 
+
 func _on_ExportButton_pressed():
-	# TODO 
 	var arr : Array = $StoryParser.graph_to_array(graph_edit, get_event_nodes())
 	$StorySaveLoad.save_as_json(arr)
-	# export as json?
-	pass
