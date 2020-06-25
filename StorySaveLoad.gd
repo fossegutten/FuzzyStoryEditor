@@ -3,7 +3,7 @@ extends Node
 var resource_path := "res://saved_story.tres"
 var json_path := "res://saved_story.json"
 
-func load_resource(resource : Resource) -> Array:
+func load_resource(resource : Resource = load(resource_path)) -> Array:
 	
 	var story : FuzzyStory = ResourceLoader.load(resource_path)
 	

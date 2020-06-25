@@ -16,4 +16,33 @@ story_nodes = [ {
 "node_id": 0,
 "node_type": "FunctionCallNode",
 "params": [  ]
+}, {
+"metadata": {
+"node_name": "ConditionNode2",
+"position": Vector2( 300, 320 ),
+"size": Vector2( 291, 124 )
+},
+"next_id_false": -1,
+"next_id_true": -1,
+"node_id": 2,
+"node_type": "ConditionNode"
+}, {
+"metadata": {
+"node_name": "ConditionNode1",
+"position": Vector2( 740, 60 ),
+"size": Vector2( 291, 124 )
+},
+"next_id_false": -1,
+"next_id_true": -1,
+"node_id": 1,
+"node_type": "ConditionNode"
+}, {
+"metadata": {
+"node_name": "RandomNode3",
+"position": Vector2( 80, 580 ),
+"size": Vector2( 189, 107 )
+},
+"node_id": 3,
+"node_type": "RandomNode",
+"outcomes": [ -1, -1 ]
 } ]

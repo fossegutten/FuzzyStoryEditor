@@ -5,10 +5,52 @@ const EMPTY := -1
 #onready var graph_edit : GraphEdit = $"../VBox/HBox2/StoryGraphEdit"
 
 
-func array_to_graph(graph_edit : GraphEdit, event_nodes : Array) -> bool:
+func array_to_graph(graph_edit : GraphEdit, event_nodes_dicts : Array) -> bool:
+	
+	var dict_nodes : Array = []
+	
+	for i in event_nodes_dicts:
+		var node : EventNode = create_node_from_dictionary(graph_edit, i)
+		if node != null:
+			dict_nodes.append(node)
+	
 	
 	
 	return false
+
+
+func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> EventNode:
+	
+	if !dict.has("node_type"):
+		printerr("Node not created. Not valid dictionary: %s" % dict)
+		return null
+	
+	# assume the dictionary is valid, if we get to here
+	
+	var node : EventNode = null
+	
+	# common data for all nodes
+	var node_type : String = dict["node_type"]
+	var node_id : int = dict["node_id"]
+	var metadata : Dictionary = dict["metadata"]
+	
+	
+	node = graph_edit.create_node_from_string(node_type, node_id)
+	
+	# node name should not be needed for anything, but connections might be useful to store in metadata
+	node.offset = metadata["position"]
+	node.rect_size = metadata["size"]
+	
+	# node specific variables
+	if node_type == "CheckPointNode":
+		node.set_checkpoint_text(node["checkpoint"])
+		
+		# TODO
+		# continue this, with connections etc.
+		pass
+	
+	return node
+
 
 func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 	var nodes := []

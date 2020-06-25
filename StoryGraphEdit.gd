@@ -10,6 +10,7 @@ onready var function_call_node : PackedScene = preload("res://nodes/FunctionCall
 onready var random_node : PackedScene = preload("res://nodes/RandomNode.tscn")
 
 const POPUP_MENU_SIZE := Vector2(100, 100)
+const AUTO := -1
 
 var new_node_offset : Vector2 = Vector2() setget set_new_node_offset
 
@@ -26,7 +27,16 @@ func set_new_node_offset(value : Vector2, from_global : bool = true) -> void:
 #		new_node_offset = new_node_offset.snapped(Vector2.ONE * snap_distance)
 
 
-func assign_node_id(node : EventNode) -> void:
+
+func is_node_id_free(id : int) -> bool:
+	for i in get_event_nodes():
+		if i.get_node_id() == id:
+			return false
+	return true
+
+
+func generate_free_node_id() -> int:
+#func assign_node_id(node : EventNode) -> int:
 	
 	var used_ids : Array = []
 	for i in get_event_nodes():
@@ -36,7 +46,8 @@ func assign_node_id(node : EventNode) -> void:
 	while new_id in used_ids:
 		new_id += 1
 	
-	node.set_node_id(new_id)
+	return new_id
+#	node.set_node_id(new_id)
 #	print("New id %s for node %s" % [new_id, node])
 
 
@@ -59,42 +70,60 @@ func has_node_in_position(position : Vector2, from_global : bool) -> bool:
 	return false
 
 
-func create_node(node_type : int):
+func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> void:
+	var type : String 
+	
+	match enum_value:
+		EventNode.NodeType.DIALOG:
+			type = "DialogNode"
+		EventNode.NodeType.CHECKPOINT:
+			type = "CheckpointNode"
+		EventNode.NodeType.CONDITION:
+			type = "ConditionNode"
+		EventNode.NodeType.FUNCTION_CALL:
+			type = "FunctionCallNode"
+		EventNode.NodeType.RANDOM:
+			type = "RandomNode"
+	
+	create_node_from_string(type, node_id)
+
+
+func create_node_from_string(node_type : String, node_id : int = AUTO) -> GraphNode:
 	
 	var new_node : EventNode
-	var node_name : String = "EventNode"
 	
 	match node_type:
-		EventNode.NodeType.DIALOG:
+		"DialogNode":
 			new_node = dialog_node.instance()
-			node_name = "DialogNode"
-		EventNode.NodeType.CHECKPOINT:
+		"CheckpointNode":
 			new_node = checkpoint_node.instance()
-			node_name = "CheckpointNode"
-		EventNode.NodeType.CONDITION:
+		"ConditionNode":
 			new_node = condition_node.instance()
-			node_name = "ConditionNode"
-		EventNode.NodeType.FUNCTION_CALL:
+		"FunctionCallNode":
 			new_node = function_call_node.instance()
-			node_name = "FunctionCallNode"
-		EventNode.NodeType.RANDOM:
+		"RandomNode":
 			new_node = random_node.instance()
-			node_name = "RandomNode"
 		_:
-			printerr("undefined event node type")
-			return
+			printerr("undefined event node type '%s', returning" % node_type)
+			return null
 	
 	new_node.connect("close_request", self, "_on_EventNode_close_request", [new_node])
 	new_node.connect("resize_request", self, "_on_EventNode_resize_request", [new_node])
 	
 	add_child(new_node)
-	assign_node_id(new_node)
+	
+	if node_id == AUTO:
+		node_id = generate_free_node_id()
+#		assign_node_id(new_node)
+#	else:
+	new_node.set_node_id(node_id)
 	
 	new_node.offset = new_node_offset
-#	new_node.rect_position = new_node_offset
 	
-	new_node.name = "%s%d" % [node_name, new_node.get_node_id()]
-	new_node.title = "%s - ID: %d" % [node_name, new_node.get_node_id()]
+	new_node.name = "%s%d" % [node_type, new_node.get_node_id()]
+	new_node.title = "%s - ID: %d" % [node_type, new_node.get_node_id()]
+	
+	return new_node
 
 
 func _on_EventNode_resize_request(size : Vector2, requester : GraphNode) -> void:

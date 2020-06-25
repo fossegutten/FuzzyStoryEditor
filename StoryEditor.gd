@@ -35,11 +35,11 @@ func _on_AddNodeMenuButton_id_pressed(id):
 	
 	graph_edit.set_new_node_offset(target_pos, false)
 	
-	graph_edit.create_node(id)
+	graph_edit.create_node_from_enum(id)
 
 
 func _on_AddNodePopupMenu_id_pressed(id):
-	graph_edit.create_node(id)
+	graph_edit.create_node_from_enum(id)
 
 
 func _on_LoadButton_pressed():
