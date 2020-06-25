@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "GraphEdit",
+"class": "EventEdit",
+"language": "GDScript",
+"path": "res://StoryGraphEdit.gd"
+}, {
 "base": "GraphNode",
 "class": "EventNode",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://resources/FuzzyStory.gd"
 } ]
 _global_script_class_icons={
+"EventEdit": "",
 "EventNode": "",
 "FuzzyStory": ""
 }

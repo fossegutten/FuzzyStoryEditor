@@ -4,6 +4,7 @@ const EMPTY := -1
 
 #onready var graph_edit : GraphEdit = $"../VBox/HBox2/StoryGraphEdit"
 
+
 func array_to_graph(graph_edit : GraphEdit, event_nodes : Array) -> bool:
 	
 	
