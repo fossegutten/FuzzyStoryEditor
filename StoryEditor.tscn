@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://StoryEditor.gd" type="Script" id=1]
 [ext_resource path="res://StoryParser.gd" type="Script" id=2]
 [ext_resource path="res://StoryGraphEdit.gd" type="Script" id=3]
 [ext_resource path="res://StorySaveLoad.gd" type="Script" id=4]
+[ext_resource path="res://FileDialogPanel.gd" type="Script" id=5]
 
 [node name="StoryEditor" type="Control"]
 anchor_right = 1.0
@@ -81,6 +82,81 @@ script = ExtResource( 3 )
 margin_right = 20.0
 margin_bottom = 20.0
 
+[node name="FileDialogPanel" type="Panel" parent="."]
+self_modulate = Color( 1, 1, 1, 0.545098 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+graph_edit_path = NodePath("../VBox/HBox2/StoryGraphEdit")
+
+[node name="FileDialogLoad" type="FileDialog" parent="FileDialogPanel"]
+margin_left = 354.0
+margin_top = 234.0
+margin_right = 669.0
+margin_bottom = 365.5
+rect_min_size = Vector2( 250, 87.5 )
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 2
+filters = PoolStringArray( "*.tres ; Text Resource", "*.res ; Binary Resource" )
+current_dir = "/repos/Godot/DialogWizard"
+current_path = "/repos/Godot/DialogWizard/"
+
+[node name="FileDialogSave" type="FileDialog" parent="FileDialogPanel"]
+margin_left = 354.0
+margin_top = 234.0
+margin_right = 669.0
+margin_bottom = 365.5
+rect_min_size = Vector2( 250, 87.5 )
+resizable = true
+access = 2
+filters = PoolStringArray( "*.tres ; Text Resource", "*.res ; Binary Resource" )
+current_dir = "/repos/Godot/DialogWizard"
+current_path = "/repos/Godot/DialogWizard/"
+
+[node name="ConfirmationDialogLoad" type="ConfirmationDialog" parent="FileDialogPanel"]
+visible = true
+margin_right = 300.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 300, 100 )
+window_title = "Are you sure you want to save?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="FileDialogPanel/ConfirmationDialogLoad"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 20
+custom_constants/margin_top = 5
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 35
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="FileDialogPanel/ConfirmationDialogLoad/Margin"]
+margin_left = 20.0
+margin_top = 5.0
+margin_right = 280.0
+margin_bottom = 65.0
+color = Color( 0.301961, 0.301961, 0.301961, 1 )
+
+[node name="Label" type="Label" parent="FileDialogPanel/ConfirmationDialogLoad/Margin"]
+margin_left = 20.0
+margin_top = 11.0
+margin_right = 280.0
+margin_bottom = 59.0
+text = "asd
+asd
+asd"
+autowrap = true
+
 [node name="StoryParser" type="Node" parent="."]
 script = ExtResource( 2 )
 
@@ -95,3 +171,11 @@ script = ExtResource( 4 )
 [connection signal="connection_to_empty" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_to_empty"]
 [connection signal="right_clicked" from="VBox/HBox2/StoryGraphEdit" to="." method="_on_StoryGraphEdit_right_clicked"]
 [connection signal="id_pressed" from="AddNodePopupMenu" to="." method="_on_AddNodePopupMenu_id_pressed"]
+[connection signal="load_request" from="FileDialogPanel" to="." method="_on_FileDialogPanel_load_request"]
+[connection signal="save_request" from="FileDialogPanel" to="." method="_on_FileDialogPanel_save_request"]
+[connection signal="file_selected" from="FileDialogPanel/FileDialogLoad" to="FileDialogPanel" method="_on_FileDialogLoad_file_selected"]
+[connection signal="popup_hide" from="FileDialogPanel/FileDialogLoad" to="FileDialogPanel" method="_on_Dialog_popup_hide"]
+[connection signal="file_selected" from="FileDialogPanel/FileDialogSave" to="FileDialogPanel" method="_on_FileDialogSave_file_selected"]
+[connection signal="popup_hide" from="FileDialogPanel/FileDialogSave" to="FileDialogPanel" method="_on_Dialog_popup_hide"]
+[connection signal="confirmed" from="FileDialogPanel/ConfirmationDialogLoad" to="FileDialogPanel" method="_on_ConfirmationDialogLoad_confirmed"]
+[connection signal="popup_hide" from="FileDialogPanel/ConfirmationDialogLoad" to="FileDialogPanel" method="_on_Dialog_popup_hide"]

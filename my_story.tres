@@ -4,4 +4,41 @@
 
 [resource]
 script = ExtResource( 1 )
-story_nodes = [  ]
+story_nodes = [ {
+"class": "",
+"function": "",
+"metadata": {
+"node_name": "FunctionCallNode0",
+"position": Vector2( -156.18, -195 ),
+"size": Vector2( 332, 144 )
+},
+"next_id": -1,
+"node_id": 0,
+"node_type": "FunctionCallNode",
+"params": [  ]
+}, {
+"character": "",
+"choices": [ {
+"next_id": -1,
+"text": "Continue"
+} ],
+"dialog": "",
+"metadata": {
+"node_name": "DialogNode2",
+"position": Vector2( 440, -100 ),
+"size": Vector2( 523, 218 )
+},
+"mood": "",
+"node_id": 2,
+"node_type": "DialogNode"
+}, {
+"metadata": {
+"node_name": "ConditionNode1",
+"position": Vector2( -80, -20 ),
+"size": Vector2( 291, 124 )
+},
+"next_id_false": -1,
+"next_id_true": -1,
+"node_id": 1,
+"node_type": "ConditionNode"
+} ]

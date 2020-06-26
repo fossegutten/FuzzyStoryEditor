@@ -59,6 +59,15 @@ func get_event_nodes() -> Array:
 	return nodes
 
 
+func clear_all_event_nodes() -> void:
+	
+	clear_connections()
+	
+	for i in get_event_nodes():
+		remove_child(i)
+		i.queue_free()
+
+
 func has_node_in_position(position : Vector2, from_global : bool) -> bool:
 #	if from_global:
 	# TODO, if needed later

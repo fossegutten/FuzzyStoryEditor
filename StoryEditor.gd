@@ -43,13 +43,11 @@ func _on_AddNodePopupMenu_id_pressed(id):
 
 
 func _on_LoadButton_pressed():
-	var arr : Array = $StorySaveLoad.load_resource()
-	$StoryParser.array_to_graph(graph_edit, arr)
+	$FileDialogPanel.open_load_panel()
 
 
 func _on_SaveButton_pressed():
-	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
-	$StorySaveLoad.save_as_resource(arr)
+	$FileDialogPanel.open_save_panel()
 
 
 func _on_ExportButton_pressed():
@@ -57,4 +55,17 @@ func _on_ExportButton_pressed():
 	$StorySaveLoad.save_as_json(arr)
 
 
+func _on_FileDialogPanel_load_request(path):
+	graph_edit.clear_all_event_nodes()
+	
+	# make sure the old nodes are removed before we load in new ones
+	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
+	
+	var arr : Array = $StorySaveLoad.load_resource(path)
+	$StoryParser.array_to_graph(graph_edit, arr)
 
+
+func _on_FileDialogPanel_save_request(path):
+	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
+	$StorySaveLoad.save_as_resource(arr, path)
