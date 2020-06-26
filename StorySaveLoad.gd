@@ -3,11 +3,11 @@ extends Node
 var resource_path := "res://saved_story.tres"
 var json_path := "res://saved_story.json"
 
-func load_resource(resource_path : String) -> Array:
+func load_resource(resource_path : String) -> FuzzyStory:
 	
 	var story : FuzzyStory = ResourceLoader.load(resource_path)
 	
-	return story.story_nodes
+	return story#.story_nodes
 
 
 func save_as_resource(node_array : Array, path : String = resource_path) -> void:
@@ -18,11 +18,6 @@ func save_as_resource(node_array : Array, path : String = resource_path) -> void
 		assert(i is Dictionary)
 		story.add_story_node(i)
 	
-#	var dir := Directory.new()
-#	if dir.file_exists(path):
-#		dir.remove(path)
-#		print("kek")
-#	print(story)
 	ResourceSaver.save(path, story)
 
 

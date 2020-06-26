@@ -10,3 +10,6 @@ text = "Continue"
 align = 2
 caret_blink = true
 caret_blink_speed = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}

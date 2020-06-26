@@ -42,17 +42,24 @@ func _on_AddNodePopupMenu_id_pressed(id):
 	graph_edit.create_node_from_enum(id)
 
 
+func _on_NewButton_pressed():
+	$FileDialogPanel.open_new_confirmation_dialog()
+
+
 func _on_LoadButton_pressed():
-	$FileDialogPanel.open_load_panel()
+	$FileDialogPanel.open_load_dialog()
 
 
 func _on_SaveButton_pressed():
-	$FileDialogPanel.open_save_panel()
+	$FileDialogPanel.open_save_dialog()
 
 
 func _on_ExportButton_pressed():
-	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
-	$StorySaveLoad.save_as_json(arr)
+	$FileDialogPanel.open_export_dialog()
+
+
+func _on_FileDialogPanel_new_request():
+	graph_edit.clear_all_event_nodes()
 
 
 func _on_FileDialogPanel_load_request(path):
@@ -62,10 +69,15 @@ func _on_FileDialogPanel_load_request(path):
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
 	
-	var arr : Array = $StorySaveLoad.load_resource(path)
-	$StoryParser.array_to_graph(graph_edit, arr)
+	var res : FuzzyStory = $StorySaveLoad.load_resource(path)
+	$StoryParser.array_to_graph(graph_edit, res)
 
 
 func _on_FileDialogPanel_save_request(path):
 	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
 	$StorySaveLoad.save_as_resource(arr, path)
+
+
+func _on_FileDialogPanel_export_request(path):
+	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
+	$StorySaveLoad.save_as_json(arr)

@@ -58,6 +58,10 @@ func get_choice_lines() -> Array:
 func update_slots(choices : int) -> void:
 	assert(choices > 0)
 	
+	# if we update from save system, also update the spinbox
+	if $ChoicesHBox/ChoicesSpinBox.value != choices:
+		$ChoicesHBox/ChoicesSpinBox.value = choices
+	
 	var choice_lines : Array = get_choice_lines()
 	
 	for i in choice_lines.size():
@@ -83,6 +87,7 @@ func update_slots(choices : int) -> void:
 #				move_child(c, CHOICE_SLOT_START + i)
 		
 		set_slot(CHOICE_SLOT_START + i, left_enabled, SLOT, in_color, right_enabled, SLOT, out_color)
+		
 
 
 func _on_child_tree_exited():

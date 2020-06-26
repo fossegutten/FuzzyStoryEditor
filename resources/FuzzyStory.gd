@@ -2,7 +2,10 @@ extends Resource
 class_name FuzzyStory
 
 # array gets shared between instances if we initialize here, so we need to avoid that
-export(Array) var story_nodes : Array #= []
+export(Array) var story_nodes : Array setget ,get_story_nodes
+
+#export(Array) var connection_list : Array #= []
+
 
 
 func add_story_node(node : Dictionary) -> void:
@@ -12,3 +15,7 @@ func add_story_node(node : Dictionary) -> void:
 		story_nodes.append(node)
 	else:
 		printerr("Story node: %s is not valid" % node)
+
+
+func get_story_nodes() -> Array:
+	return story_nodes

@@ -5,15 +5,30 @@ const EMPTY := -1
 #onready var graph_edit : GraphEdit = $"../VBox/HBox2/StoryGraphEdit"
 
 
-func array_to_graph(graph_edit : GraphEdit, event_nodes_dicts : Array) -> bool:
+func array_to_graph(graph_edit : GraphEdit, story : FuzzyStory) -> bool:
 	
+	var event_node_dicts : Array = story.get_story_nodes()
+	
+	# first add all nodes to the graph edit
 	var dict_nodes : Array = []
-	
-	for i in event_nodes_dicts:
+	for i in event_node_dicts:
 		var node : EventNode = create_node_from_dictionary(graph_edit, i)
 		if node != null:
 			dict_nodes.append(node)
 	
+	# then connect them all
+	for i in event_node_dicts:
+		
+		var metadata : Dictionary = i["metadata"]
+		var connections : Array = metadata["connections"]
+		for j in connections:
+			print([j.from, metadata["node_name"]])
+			print([j.from == metadata["node_name"]])
+			assert(j.from == metadata["node_name"])
+			graph_edit.connect_node(j.from, j.from_port, j.to, j.to_port)
+			
+#		print(connections)
+#		pass
 	
 	
 	return false
@@ -34,7 +49,6 @@ func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> E
 	var node_id : int = dict["node_id"]
 	var metadata : Dictionary = dict["metadata"]
 	
-	
 	node = graph_edit.create_node_from_string(node_type, node_id)
 	
 	# node name should not be needed for anything, but connections might be useful to store in metadata
@@ -43,11 +57,32 @@ func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> E
 	
 	# node specific variables
 	if node_type == "CheckPointNode":
-		node.set_checkpoint_text(node["checkpoint"])
-		
-		# TODO
-		# continue this, with connections etc.
+		node.set_checkpoint_text(dict["checkpoint"])
+	elif node_type == "ConditionNode":
 		pass
+	elif node_type == "DialogNode":
+		node.set_character_text(dict["character"])
+		node.set_mood_text(dict["mood"])
+		node.set_dialog_text(dict["dialog"])
+		
+		var choices : Array = dict["choices"]
+		
+		node.update_slots(choices.size())
+		
+		for i in choices.size():
+			var choice_line : LineEdit = node.get_choice_lines()[i]
+			choice_line.text = choices[i]["text"]
+	
+	elif node_type == "FunctionCallNode":
+		node.set_class_text(dict["class"])
+		node.set_function_text(dict["function"])
+		
+		var params : Array = dict["params"]
+		if params.size() > 0:
+			# convert array into string
+			node.set_params_text(str(params))
+	elif node_type == "RandomNode":
+		node.update_slots(dict["outcomes"].size())
 	
 	return node
 
@@ -59,12 +94,14 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 		
 		var n := i as EventNode
 		
+		# Common for all nodes
 		var node := {
 			"metadata": {
 				"node_name": n.name,
 				"position": n.offset,
 				"size": n.rect_size,
-#				"rect": Rect2(n.offset, n.rect_size)
+				# see below, where we store all connections directly copied from the GraphEdit
+				"connections": []
 			},
 			"node_type": "EventNode",
 			"node_id": int(n.get_node_id()),
@@ -72,6 +109,12 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 #			"next_id": EMPTY
 		}
 		
+		# Maybe it is inefficient to iterate twice for some nodes, but it sure is simpler!
+		for c in graph_edit.get_connection_list():
+			if c.from == n.name:
+				node["metadata"]["connections"].append(c)
+		
+		# Node specific
 		if "CheckpointNode".is_subsequence_ofi(n.name):
 			node["node_type"] = "CheckpointNode"
 			node["checkpoint"] = n.get_checkpoint_text()
@@ -82,7 +125,7 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 				if c.from == n.name:
 					var target : EventNode = graph_edit.get_node(c.to)
 					node["next_id"] = target.get_node_id()
-					
+					node["metadata"]["connections"].append(c)
 			
 		elif "ConditionNode".is_subsequence_ofi(n.name):
 			node["node_type"] = "ConditionNode"
