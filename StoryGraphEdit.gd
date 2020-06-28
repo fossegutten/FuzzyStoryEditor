@@ -84,21 +84,6 @@ func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> void:
 	
 	# create the string, but this depends on enum being similar to node name string
 	var type : String = EventNode.NodeType.keys()[enum_value].to_lower().capitalize().replacen(" ", "") + "Node"
-#	var type : String
-	
-#	match enum_value:
-#		EventNode.NodeType.DIALOG:
-#			type = "DialogNode"
-#		EventNode.NodeType.CHECKPOINT:
-#			type = "CheckpointNode"
-#		EventNode.NodeType.CONDITION:
-#			type = "ConditionNode"
-#		EventNode.NodeType.FUNCTION_CALL:
-#			type = "FunctionCallNode"
-#		EventNode.NodeType.JUMP:
-#			type = "JumpNode"
-#		EventNode.NodeType.RANDOM:
-#			type = "RandomNode"
 	
 	create_node_from_string(type, node_id)
 

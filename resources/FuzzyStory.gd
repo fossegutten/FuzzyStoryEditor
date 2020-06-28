@@ -19,3 +19,27 @@ func add_story_node(node : Dictionary) -> void:
 
 func get_story_nodes() -> Array:
 	return story_nodes
+
+
+# helper functions
+func get_story_node(id : int) -> Dictionary:
+	
+	var n : Dictionary
+	
+	for i in get_story_nodes():
+		if i["node_id"] == id:
+			n = i
+	
+	return n
+
+
+func get_checkpoint_node(checkpoint : String) -> Dictionary:
+	
+	var n : Dictionary
+	
+	for i in get_story_nodes():
+		if i["node_type"] == "CheckPointNode":
+			if i["checkpoint"] == checkpoint:
+				n = i
+	
+	return n
