@@ -11,7 +11,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [  ]
 }
 
 [node name="VBox" type="VBoxContainer" parent="."]
@@ -89,6 +90,7 @@ margin_right = 20.0
 margin_bottom = 20.0
 
 [node name="FileDialogPanel" type="Panel" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.545098 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -99,10 +101,11 @@ __meta__ = {
 graph_edit_path = NodePath("../VBox/HBox2/StoryGraphEdit")
 
 [node name="FileDialogLoad" type="FileDialog" parent="FileDialogPanel"]
-margin_left = 354.0
-margin_top = 234.0
-margin_right = 669.0
-margin_bottom = 365.5
+visible = true
+margin_left = 667.391
+margin_top = 331.879
+margin_right = 982.391
+margin_bottom = 463.379
 rect_min_size = Vector2( 250, 87.5 )
 window_title = "Open a File"
 resizable = true
@@ -113,11 +116,13 @@ current_dir = "/repos/Godot/DialogWizard"
 current_path = "/repos/Godot/DialogWizard/"
 
 [node name="FileDialogSave" type="FileDialog" parent="FileDialogPanel"]
-margin_left = 354.0
-margin_top = 234.0
-margin_right = 669.0
-margin_bottom = 365.5
+visible = true
+margin_left = 640.452
+margin_top = 489.023
+margin_right = 996.452
+margin_bottom = 620.523
 rect_min_size = Vector2( 250, 87.5 )
+window_title = "Save resource"
 resizable = true
 access = 2
 filters = PoolStringArray( "*.tres ; Text Resource", "*.res ; Binary Resource" )
@@ -126,10 +131,10 @@ current_path = "/repos/Godot/DialogWizard/"
 
 [node name="FileDialogExport" type="FileDialog" parent="FileDialogPanel"]
 visible = true
-margin_left = 354.0
-margin_top = 234.0
-margin_right = 669.0
-margin_bottom = 365.5
+margin_left = 635.065
+margin_top = 180.122
+margin_right = 991.065
+margin_bottom = 311.622
 rect_min_size = Vector2( 250, 87.5 )
 window_title = "Export to Json"
 resizable = true
@@ -140,56 +145,35 @@ current_path = "/repos/Godot/DialogWizard/"
 
 [node name="ConfirmationDialogLoad" type="ConfirmationDialog" parent="FileDialogPanel"]
 visible = true
-margin_right = 300.0
-margin_bottom = 100.0
+margin_left = 397.801
+margin_top = 31.4289
+margin_right = 697.801
+margin_bottom = 131.429
 rect_min_size = Vector2( 300, 100 )
 window_title = "Are you sure you want to save?"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Margin" type="MarginContainer" parent="FileDialogPanel/ConfirmationDialogLoad"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = 8.0
-margin_right = -8.0
-margin_bottom = -36.0
-mouse_filter = 2
-custom_constants/margin_right = 20
-custom_constants/margin_top = 5
-custom_constants/margin_left = 20
-custom_constants/margin_bottom = 35
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="FileDialogPanel/ConfirmationDialogLoad/Margin"]
-margin_left = 20.0
-margin_top = 5.0
-margin_right = 264.0
-margin_bottom = 53.0
-color = Color( 0.301961, 0.301961, 0.301961, 1 )
-
-[node name="Label" type="Label" parent="FileDialogPanel/ConfirmationDialogLoad/Margin"]
-margin_left = 20.0
-margin_top = 5.0
-margin_right = 264.0
-margin_bottom = 53.0
-text = "asd
-asd
-asd"
-autowrap = true
-
 [node name="ConfirmationDialogNew" type="ConfirmationDialog" parent="FileDialogPanel"]
 visible = true
-margin_right = 300.0
-margin_bottom = 100.0
+margin_left = 708.498
+margin_top = 51.1843
+margin_right = 1018.5
+margin_bottom = 151.184
 rect_min_size = Vector2( 300, 100 )
 window_title = "Are you sure you want to clear all nodes?"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="WarningDialog" type="AcceptDialog" parent="FileDialogPanel"]
+visible = true
+margin_left = 442.432
+margin_top = 417.005
+margin_right = 525.432
+margin_bottom = 475.005
+window_title = "Warning!"
 
 [node name="StoryParser" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -218,3 +202,5 @@ script = ExtResource( 4 )
 [connection signal="popup_hide" from="FileDialogPanel/ConfirmationDialogLoad" to="FileDialogPanel" method="_on_Dialog_popup_hide"]
 [connection signal="confirmed" from="FileDialogPanel/ConfirmationDialogNew" to="FileDialogPanel" method="_on_ConfirmationDialogNew_confirmed"]
 [connection signal="popup_hide" from="FileDialogPanel/ConfirmationDialogNew" to="FileDialogPanel" method="_on_Dialog_popup_hide"]
+[connection signal="popup_hide" from="FileDialogPanel/WarningDialog" to="FileDialogPanel" method="_on_Dialog_popup_hide"]
+[connection signal="save_failed" from="StorySaveLoad" to="FileDialogPanel" method="_on_StorySaveLoad_save_failed"]

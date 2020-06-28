@@ -9,12 +9,7 @@ var file_dialog_size := Vector2(600, 400)
 var confirmation_dialog_size := Vector2(300, 100)
 
 export(NodePath) var graph_edit_path : NodePath
-#enum {
-#	LOAD,
-#	SAVE
-#}
-#
-#var current_mode : int = -1
+
 var current_load_path : String = ""
 
 func _ready():
@@ -44,12 +39,12 @@ func open_export_dialog() -> void:
 func open_load_confirmation_dialog(title : String, text : String = "") -> void:
 	$ConfirmationDialogLoad.window_title = title
 	$ConfirmationDialogLoad.popup_centered(confirmation_dialog_size)
-#	$ConfirmationDialogLoad/Margin/Label.text = text
+#	$ConfirmationDialogLoad.dialog_text = text
 
 
 func _on_Dialog_popup_hide():
 	# don't close if confirmation dialog just popped
-	if !$ConfirmationDialogLoad.visible:
+	if !$ConfirmationDialogLoad.visible and !$WarningDialog.visible:
 		hide()
 
 
@@ -87,3 +82,9 @@ func _on_ConfirmationDialogNew_confirmed():
 
 func _on_FileDialogExport_file_selected(path):
 	emit_signal("export_request", path)
+
+
+func _on_StorySaveLoad_save_failed(msg):
+	show()
+	$WarningDialog.dialog_text = msg
+	$WarningDialog.popup_centered(confirmation_dialog_size)

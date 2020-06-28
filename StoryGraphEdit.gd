@@ -7,6 +7,7 @@ onready var dialog_node : PackedScene = preload("res://nodes/DialogNode.tscn")
 onready var condition_node : PackedScene = preload("res://nodes/ConditionNode.tscn")
 onready var checkpoint_node : PackedScene = preload("res://nodes/CheckpointNode.tscn")
 onready var function_call_node : PackedScene = preload("res://nodes/FunctionCallNode.tscn")
+onready var jump_node : PackedScene = preload("res://nodes/JumpNode.tscn")
 onready var random_node : PackedScene = preload("res://nodes/RandomNode.tscn")
 
 const POPUP_MENU_SIZE := Vector2(100, 100)
@@ -80,19 +81,24 @@ func has_node_in_position(position : Vector2, from_global : bool) -> bool:
 
 
 func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> void:
-	var type : String 
 	
-	match enum_value:
-		EventNode.NodeType.DIALOG:
-			type = "DialogNode"
-		EventNode.NodeType.CHECKPOINT:
-			type = "CheckpointNode"
-		EventNode.NodeType.CONDITION:
-			type = "ConditionNode"
-		EventNode.NodeType.FUNCTION_CALL:
-			type = "FunctionCallNode"
-		EventNode.NodeType.RANDOM:
-			type = "RandomNode"
+	# create the string, but this depends on enum being similar to node name string
+	var type : String = EventNode.NodeType.keys()[enum_value].to_lower().capitalize().replacen(" ", "") + "Node"
+#	var type : String
+	
+#	match enum_value:
+#		EventNode.NodeType.DIALOG:
+#			type = "DialogNode"
+#		EventNode.NodeType.CHECKPOINT:
+#			type = "CheckpointNode"
+#		EventNode.NodeType.CONDITION:
+#			type = "ConditionNode"
+#		EventNode.NodeType.FUNCTION_CALL:
+#			type = "FunctionCallNode"
+#		EventNode.NodeType.JUMP:
+#			type = "JumpNode"
+#		EventNode.NodeType.RANDOM:
+#			type = "RandomNode"
 	
 	create_node_from_string(type, node_id)
 
@@ -110,6 +116,8 @@ func create_node_from_string(node_type : String, node_id : int = AUTO) -> GraphN
 			new_node = condition_node.instance()
 		"FunctionCallNode":
 			new_node = function_call_node.instance()
+		"JumpNode":
+			new_node = jump_node.instance()
 		"RandomNode":
 			new_node = random_node.instance()
 		_:

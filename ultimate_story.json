@@ -1,0 +1,79 @@
+[
+	{
+		"node_type": "CheckpointNode",
+		"node_id": 4,
+		"checkpoint": "",
+		"next_id": 5
+	},
+	{
+		"node_type": "CheckpointNode",
+		"node_id": 2,
+		"checkpoint": "",
+		"next_id": 5
+	},
+	{
+		"node_type": "RandomNode",
+		"node_id": 1,
+		"outcomes": [
+			2,
+			4,
+			3
+		]
+	},
+	{
+		"node_type": "CheckpointNode",
+		"node_id": 3,
+		"checkpoint": "",
+		"next_id": 5
+	},
+	{
+		"node_type": "FunctionCallNode",
+		"node_id": 5,
+		"class": "player",
+		"function": "damage",
+		"params": [
+			2
+		],
+		"next_id": 6
+	},
+	{
+		"node_type": "DialogNode",
+		"node_id": 0,
+		"character": "npc",
+		"mood": "happy",
+		"dialog": "What do you want to do?",
+		"choices": [
+			{
+				"text": "Try hard",
+				"next_id": 1
+			},
+			{
+				"text": "skip this",
+				"next_id": 7
+			}
+		]
+	},
+	{
+		"node_type": "ConditionNode",
+		"node_id": 6,
+		"next_id_true": 7,
+		"next_id_false": -1
+	},
+	{
+		"node_type": "DialogNode",
+		"node_id": 7,
+		"character": "NPC",
+		"mood": "neutral",
+		"dialog": "Do I need to repeat myself?",
+		"choices": [
+			{
+				"text": "No",
+				"next_id": -1
+			},
+			{
+				"text": "Yes",
+				"next_id": 0
+			}
+		]
+	}
+]

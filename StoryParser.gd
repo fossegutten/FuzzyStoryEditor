@@ -22,18 +22,18 @@ func array_to_graph(graph_edit : GraphEdit, story : FuzzyStory) -> bool:
 		var metadata : Dictionary = i["metadata"]
 		var connections : Array = metadata["connections"]
 		for j in connections:
-			print([j.from, metadata["node_name"]])
-			print([j.from == metadata["node_name"]])
+#			print([j.from, metadata["node_name"]])
+#			print([j.from == metadata["node_name"]])
 			assert(j.from == metadata["node_name"])
 			graph_edit.connect_node(j.from, j.from_port, j.to, j.to_port)
 			
 #		print(connections)
 #		pass
 	
-	
 	return false
 
 
+# TODO add checks for everything here
 func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> EventNode:
 	
 	if !dict.has("node_type"):
@@ -59,7 +59,7 @@ func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> E
 	if node_type == "CheckPointNode":
 		node.set_checkpoint_text(dict["checkpoint"])
 	elif node_type == "ConditionNode":
-		pass
+		node.set_text(dict["text"])
 	elif node_type == "DialogNode":
 		node.set_character_text(dict["character"])
 		node.set_mood_text(dict["mood"])
@@ -81,6 +81,8 @@ func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> E
 		if params.size() > 0:
 			# convert array into string
 			node.set_params_text(str(params))
+	elif node_type == "JumpNode":
+		node.set_text(dict["text"])
 	elif node_type == "RandomNode":
 		node.update_slots(dict["outcomes"].size())
 	
@@ -129,6 +131,7 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 			
 		elif "ConditionNode".is_subsequence_ofi(n.name):
 			node["node_type"] = "ConditionNode"
+			node["text"] = n.get_text()
 			# make sure we store a value even if not connected
 			node["next_id_true"] = EMPTY
 			node["next_id_false"] = EMPTY
@@ -198,6 +201,10 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 					var target : EventNode = graph_edit.get_node(c.to)
 					node["next_id"] = target.get_node_id()
 		
+		elif "JumpNode".is_subsequence_ofi(n.name):
+			node["node_type"] = "JumpNode"
+			node["text"] = n.get_text()
+		
 		elif "RandomNode".is_subsequence_ofi(n.name):
 			node["node_type"] = "RandomNode"
 			
@@ -215,6 +222,4 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 		
 		nodes.append(node)
 	
-	
-	print(nodes)
 	return nodes

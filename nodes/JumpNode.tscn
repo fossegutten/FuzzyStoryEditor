@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://nodes/assets/JumpNodeSelected.stylebox" type="StyleBox" id=1]
+[ext_resource path="res://nodes/assets/JumpNode.stylebox" type="StyleBox" id=2]
+[ext_resource path="res://nodes/JumpNode.gd" type="Script" id=3]
+
+[node name="JumpNode" type="GraphNode"]
+margin_right = 291.0
+margin_bottom = 82.0
+custom_styles/frame = ExtResource( 2 )
+custom_styles/selectedframe = ExtResource( 1 )
+custom_constants/port_offset = 10
+custom_constants/separation = 5
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+out_color = Color( 1, 0.701961, 0, 1 )
+
+[node name="TextEdit" type="LineEdit" parent="."]
+margin_left = 20.0
+margin_top = 42.0
+margin_right = 271.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 0, 22 )
+placeholder_text = "target"

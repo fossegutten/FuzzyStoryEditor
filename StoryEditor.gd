@@ -12,12 +12,19 @@ func _ready():
 	var p : PopupMenu = add_node_menu_button.get_popup()
 	p.connect("id_pressed", self, "_on_AddNodeMenuButton_id_pressed")
 	
-	for i in [add_node_popup_menu, add_node_menu_button.get_popup()]:
-		i.add_item("Dialog", EventNode.NodeType.DIALOG)
-		i.add_item("Checkpoint", EventNode.NodeType.CHECKPOINT)
-		i.add_item("Condition", EventNode.NodeType.CONDITION)
-		i.add_item("FunctionCall", EventNode.NodeType.FUNCTION_CALL)
-		i.add_item("Random", EventNode.NodeType.RANDOM)
+	for i in EventNode.NodeType.size():
+		for j in [add_node_popup_menu, add_node_menu_button.get_popup()]:
+			# capitalize also removes underscores
+			var s : String = EventNode.NodeType.keys()[i].to_lower().capitalize()#.replace("_", " ")
+			j.add_item(s, i)
+	
+#	for i in [add_node_popup_menu, add_node_menu_button.get_popup()]:
+#		i.add_item("Dialog", EventNode.NodeType.DIALOG)
+#		i.add_item("Checkpoint", EventNode.NodeType.CHECKPOINT)
+#		i.add_item("Condition", EventNode.NodeType.CONDITION)
+#		i.add_item("FunctionCall", EventNode.NodeType.FUNCTION_CALL)
+#		i.add_item("Jump", EventNode.NodeType.JUMP)
+#		i.add_item("Random", EventNode.NodeType.RANDOM)
 
 
 func _on_StoryGraphEdit_right_clicked(position):
@@ -80,4 +87,4 @@ func _on_FileDialogPanel_save_request(path):
 
 func _on_FileDialogPanel_export_request(path):
 	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
-	$StorySaveLoad.save_as_json(arr)
+	$StorySaveLoad.save_as_json(arr, path)

@@ -8,6 +8,7 @@ enum NodeType {
 	CONDITION,
 	DIALOG,
 	FUNCTION_CALL,
+	JUMP,
 	RANDOM
 }
 
@@ -23,3 +24,14 @@ func set_node_id(value : int) -> void:
 
 func get_node_id() -> int:
 	return node_id
+
+
+# TODO implement this instead of the "parser" script
+static func to_dict(node : EventNode) -> Dictionary:
+	
+	return {}
+
+static func new_from_dict(dict : Dictionary) -> EventNode:
+	var new_node : EventNode
+	
+	return new_node
