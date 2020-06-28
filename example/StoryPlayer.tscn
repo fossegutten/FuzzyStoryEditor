@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://example/StoryPlayer.gd" type="Script" id=1]
+[ext_resource path="res://example/DialogPlayer.gd" type="Script" id=2]
 
 [node name="StoryPlayer" type="Control"]
 anchor_right = 1.0
@@ -9,3 +10,113 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0588235, 0.54902, 0.423529, 0.52549 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DialogPlayer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 200
+custom_constants/margin_top = 100
+custom_constants/margin_left = 200
+custom_constants/margin_bottom = 100
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="DialogPlayer"]
+margin_left = 200.0
+margin_top = 100.0
+margin_right = 824.0
+margin_bottom = 500.0
+color = Color( 0.0235294, 0.160784, 0.12549, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="DialogPlayer"]
+margin_left = 200.0
+margin_top = 100.0
+margin_right = 824.0
+margin_bottom = 500.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = 25
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 25
+
+[node name="VBox" type="VBoxContainer" parent="DialogPlayer/Margin"]
+margin_left = 50.0
+margin_top = 25.0
+margin_right = 574.0
+margin_bottom = 375.0
+custom_constants/separation = 20
+
+[node name="HBoxLabels" type="HBoxContainer" parent="DialogPlayer/Margin/VBox"]
+margin_right = 524.0
+margin_bottom = 14.0
+custom_constants/separation = 50
+alignment = 1
+
+[node name="LabelChar" type="Label" parent="DialogPlayer/Margin/VBox/HBoxLabels"]
+margin_left = 189.0
+margin_right = 248.0
+margin_bottom = 14.0
+text = "character"
+
+[node name="LabelMood" type="Label" parent="DialogPlayer/Margin/VBox/HBoxLabels"]
+margin_left = 298.0
+margin_right = 335.0
+margin_bottom = 14.0
+text = "mood"
+
+[node name="HSeparator" type="HSeparator" parent="DialogPlayer/Margin/VBox"]
+margin_top = 34.0
+margin_right = 524.0
+margin_bottom = 38.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DialogPlayer/Margin/VBox"]
+margin_top = 58.0
+margin_right = 524.0
+margin_bottom = 286.0
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "asdasd a"
+text = "asdasd a"
+
+[node name="HSeparator2" type="HSeparator" parent="DialogPlayer/Margin/VBox"]
+margin_top = 306.0
+margin_right = 524.0
+margin_bottom = 310.0
+
+[node name="HBoxButtons" type="HBoxContainer" parent="DialogPlayer/Margin/VBox"]
+margin_top = 330.0
+margin_right = 524.0
+margin_bottom = 350.0
+custom_constants/separation = 20
+alignment = 1
+
+[node name="Button" type="Button" parent="DialogPlayer/Margin/VBox/HBoxButtons"]
+margin_left = 228.0
+margin_right = 295.0
+margin_bottom = 20.0
+text = "example"
+
+[node name="HideButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -78.334
+margin_top = 28.4678
+margin_right = -36.334
+margin_bottom = 48.4678
+text = "Hide"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="HideButton" to="." method="_on_HideButton_pressed"]

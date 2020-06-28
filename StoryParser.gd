@@ -56,7 +56,7 @@ func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> E
 	node.rect_size = metadata["size"]
 	
 	# node specific variables
-	if node_type == "CheckPointNode":
+	if node_type == "CheckpointNode":
 		node.set_checkpoint_text(dict["checkpoint"])
 	elif node_type == "ConditionNode":
 		node.set_text(dict["text"])
@@ -85,6 +85,8 @@ func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> E
 		node.set_text(dict["text"])
 	elif node_type == "RandomNode":
 		node.update_slots(dict["outcomes"].size())
+	else:
+		printerr("Node type '%s' not implemented." % node_type)
 	
 	return node
 
@@ -219,6 +221,9 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 					var target : EventNode = graph_edit.get_node(c.to)
 					outcomes[c.from_port] = target.get_node_id()
 			node["outcomes"] = outcomes
+		else:
+			printerr("Node type '%s' not implemented." % n.name)
+			continue
 		
 		nodes.append(node)
 	

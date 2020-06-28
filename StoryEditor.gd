@@ -2,7 +2,7 @@ extends Control
 
 onready var graph_edit : GraphEdit = $VBox/HBox2/StoryGraphEdit
 onready var add_node_popup_menu : PopupMenu = $AddNodePopupMenu
-onready var add_node_menu_button : MenuButton = $VBox/HBox2/VBox/AddNodeMenuButton
+onready var add_node_menu_button : MenuButton = $VBox/HBox/AddNodeMenuButton
 
 const POPUP_MENU_SIZE := Vector2(100, 100)
 
@@ -88,3 +88,9 @@ func _on_FileDialogPanel_save_request(path):
 func _on_FileDialogPanel_export_request(path):
 	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
 	$StorySaveLoad.save_as_json(arr, path)
+
+
+func _on_TestStoryButton_pressed():
+	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
+	var story : FuzzyStory = $StorySaveLoad.create_story_resource(arr)
+	$StoryPlayer.start("start", story)

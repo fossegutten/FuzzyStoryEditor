@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 story_nodes = [ {
-"checkpoint": "",
+"checkpoint": "test",
 "metadata": {
 "connections": [ {
 "from": "CheckpointNode0",
@@ -115,4 +115,25 @@ story_nodes = [ {
 "node_id": 3,
 "node_type": "RandomNode",
 "outcomes": [ 0, 1, 2, 4 ]
+}, {
+"checkpoint": "start",
+"metadata": {
+"connections": [ {
+"from": "CheckpointNode5",
+"from_port": 0,
+"to": "RandomNode3",
+"to_port": 0
+}, {
+"from": "CheckpointNode5",
+"from_port": 0,
+"to": "RandomNode3",
+"to_port": 0
+} ],
+"node_name": "CheckpointNode5",
+"position": Vector2( -780, 200 ),
+"size": Vector2( 189, 86 )
+},
+"next_id": 3,
+"node_id": 5,
+"node_type": "CheckpointNode"
 } ]

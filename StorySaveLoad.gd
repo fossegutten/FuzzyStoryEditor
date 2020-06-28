@@ -5,6 +5,16 @@ signal save_failed(msg)
 var resource_path := "res://saved_story.tres"
 var json_path := "res://saved_story.json"
 
+func create_story_resource(node_array : Array) -> FuzzyStory:
+	var story := FuzzyStory.new()
+	
+	for i in node_array:
+		assert(i is Dictionary)
+		story.add_story_node(i)
+	
+	return story
+
+
 func load_resource(resource_path : String) -> FuzzyStory:
 	
 	var story : FuzzyStory = ResourceLoader.load(resource_path)
@@ -21,11 +31,7 @@ func save_as_resource(node_array : Array, path : String = resource_path) -> void
 			emit_signal("save_failed", "Save failed. Cannot overwrite other resource types")
 			return
 	
-	var story := FuzzyStory.new()
-	
-	for i in node_array:
-		assert(i is Dictionary)
-		story.add_story_node(i)
+	var story := create_story_resource(node_array)
 	
 	var err := ResourceSaver.save(path, story)
 	if ResourceSaver.save(path, story) != OK:

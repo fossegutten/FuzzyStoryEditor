@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://StoryEditor.gd" type="Script" id=1]
 [ext_resource path="res://StoryParser.gd" type="Script" id=2]
 [ext_resource path="res://StoryGraphEdit.gd" type="Script" id=3]
 [ext_resource path="res://StorySaveLoad.gd" type="Script" id=4]
 [ext_resource path="res://FileDialogPanel.gd" type="Script" id=5]
+[ext_resource path="res://example/StoryPlayer.tscn" type="PackedScene" id=6]
 
 [node name="StoryEditor" type="Control"]
 anchor_right = 1.0
@@ -49,35 +50,42 @@ margin_right = 187.0
 margin_bottom = 20.0
 text = "Export"
 
+[node name="VSeparator" type="VSeparator" parent="VBox/HBox"]
+margin_left = 191.0
+margin_right = 195.0
+margin_bottom = 20.0
+
+[node name="AddNodeMenuButton" type="MenuButton" parent="VBox/HBox"]
+margin_left = 199.0
+margin_right = 274.0
+margin_bottom = 20.0
+text = "Add Node"
+flat = false
+
+[node name="VSeparator2" type="VSeparator" parent="VBox/HBox"]
+margin_left = 278.0
+margin_right = 282.0
+margin_bottom = 20.0
+
+[node name="TestStoryButton" type="Button" parent="VBox/HBox"]
+margin_left = 286.0
+margin_right = 361.0
+margin_bottom = 20.0
+text = "Test story"
+
 [node name="HSeparator" type="HSeparator" parent="VBox"]
 margin_top = 24.0
 margin_right = 1024.0
 margin_bottom = 28.0
 
-[node name="HBox2" type="HBoxContainer" parent="VBox"]
+[node name="HBox2" type="MarginContainer" parent="VBox"]
 margin_top = 32.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBox" type="VBoxContainer" parent="VBox/HBox2"]
-margin_right = 75.0
-margin_bottom = 568.0
-
-[node name="AddNodeMenuButton" type="MenuButton" parent="VBox/HBox2/VBox"]
-margin_right = 75.0
-margin_bottom = 20.0
-text = "Add Node"
-flat = false
-
-[node name="VSeparator" type="VSeparator" parent="VBox/HBox2"]
-margin_left = 79.0
-margin_right = 83.0
-margin_bottom = 568.0
-
 [node name="StoryGraphEdit" type="GraphEdit" parent="VBox/HBox2"]
-margin_left = 87.0
 margin_right = 1024.0
 margin_bottom = 568.0
 size_flags_horizontal = 3
@@ -175,6 +183,8 @@ margin_right = 525.432
 margin_bottom = 475.005
 window_title = "Warning!"
 
+[node name="StoryPlayer" parent="." instance=ExtResource( 6 )]
+
 [node name="StoryParser" type="Node" parent="."]
 script = ExtResource( 2 )
 
@@ -184,6 +194,7 @@ script = ExtResource( 4 )
 [connection signal="pressed" from="VBox/HBox/LoadButton" to="." method="_on_LoadButton_pressed"]
 [connection signal="pressed" from="VBox/HBox/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="VBox/HBox/ExportButton" to="." method="_on_ExportButton_pressed"]
+[connection signal="pressed" from="VBox/HBox/TestStoryButton" to="." method="_on_TestStoryButton_pressed"]
 [connection signal="connection_request" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_request"]
 [connection signal="connection_to_empty" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_to_empty"]
 [connection signal="right_clicked" from="VBox/HBox2/StoryGraphEdit" to="." method="_on_StoryGraphEdit_right_clicked"]

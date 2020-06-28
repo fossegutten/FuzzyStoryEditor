@@ -1,0 +1,147 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://resources/FuzzyStory.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+story_nodes = [ {
+"checkpoint": "start",
+"metadata": {
+"connections": [ {
+"from": "CheckpointNode0",
+"from_port": 0,
+"to": "DialogNode1",
+"to_port": 0
+}, {
+"from": "CheckpointNode0",
+"from_port": 0,
+"to": "DialogNode1",
+"to_port": 0
+} ],
+"node_name": "CheckpointNode0",
+"position": Vector2( -39, -102 ),
+"size": Vector2( 189, 86 )
+},
+"next_id": 1,
+"node_id": 0,
+"node_type": "CheckpointNode"
+}, {
+"character": "player",
+"choices": [ {
+"next_id": 2,
+"text": "Continue"
+} ],
+"dialog": "hello",
+"metadata": {
+"connections": [ {
+"from": "DialogNode1",
+"from_port": 0,
+"to": "DialogNode2",
+"to_port": 0
+} ],
+"node_name": "DialogNode1",
+"position": Vector2( 200, -80 ),
+"size": Vector2( 523, 218 )
+},
+"mood": "nice",
+"node_id": 1,
+"node_type": "DialogNode"
+}, {
+"metadata": {
+"connections": [ {
+"from": "RandomNode3",
+"from_port": 0,
+"to": "JumpNode4",
+"to_port": 0
+}, {
+"from": "RandomNode3",
+"from_port": 1,
+"to": "JumpNode6",
+"to_port": 0
+} ],
+"node_name": "RandomNode3",
+"position": Vector2( 1440, 40 ),
+"size": Vector2( 189, 107 )
+},
+"node_id": 3,
+"node_type": "RandomNode",
+"outcomes": [ 4, 6 ]
+}, {
+"character": "npc",
+"choices": [ {
+"next_id": 3,
+"text": "Continue"
+} ],
+"dialog": "hi!",
+"metadata": {
+"connections": [ {
+"from": "DialogNode2",
+"from_port": 0,
+"to": "RandomNode3",
+"to_port": 0
+} ],
+"node_name": "DialogNode2",
+"position": Vector2( 820, -60 ),
+"size": Vector2( 523, 218 )
+},
+"mood": "also nice",
+"node_id": 2,
+"node_type": "DialogNode"
+}, {
+"metadata": {
+"connections": [  ],
+"node_name": "JumpNode4",
+"position": Vector2( 1800, 40 ),
+"size": Vector2( 291, 86 )
+},
+"node_id": 4,
+"node_type": "JumpNode",
+"text": "start"
+}, {
+"metadata": {
+"connections": [  ],
+"node_name": "JumpNode6",
+"position": Vector2( 1800, 160 ),
+"size": Vector2( 291, 86 )
+},
+"node_id": 6,
+"node_type": "JumpNode",
+"text": "warp"
+}, {
+"character": "player",
+"choices": [ {
+"next_id": -1,
+"text": "Continue"
+} ],
+"dialog": "Did you see that!?",
+"metadata": {
+"connections": [  ],
+"node_name": "DialogNode7",
+"position": Vector2( 1320, 320 ),
+"size": Vector2( 523, 218 )
+},
+"mood": "proud",
+"node_id": 7,
+"node_type": "DialogNode"
+}, {
+"checkpoint": "warp",
+"metadata": {
+"connections": [ {
+"from": "CheckpointNode5",
+"from_port": 0,
+"to": "DialogNode7",
+"to_port": 0
+}, {
+"from": "CheckpointNode5",
+"from_port": 0,
+"to": "DialogNode7",
+"to_port": 0
+} ],
+"node_name": "CheckpointNode5",
+"position": Vector2( 1000, 340 ),
+"size": Vector2( 189, 86 )
+},
+"next_id": 7,
+"node_id": 5,
+"node_type": "CheckpointNode"
+} ]

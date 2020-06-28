@@ -38,7 +38,7 @@ func get_checkpoint_node(checkpoint : String) -> Dictionary:
 	var n : Dictionary
 	
 	for i in get_story_nodes():
-		if i["node_type"] == "CheckPointNode":
+		if i["node_type"] == "CheckpointNode":
 			if i["checkpoint"] == checkpoint:
 				n = i
 	
