@@ -1,16 +1,16 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://StoryEditor.gd" type="Script" id=1]
-[ext_resource path="res://StoryParser.gd" type="Script" id=2]
-[ext_resource path="res://StoryGraphEdit.gd" type="Script" id=3]
-[ext_resource path="res://StorySaveLoad.gd" type="Script" id=4]
-[ext_resource path="res://FileDialogPanel.gd" type="Script" id=5]
-[ext_resource path="res://example/StoryPlayer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://example/StoryPlayer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://editor/StoryGraphEdit.gd" type="Script" id=2]
+[ext_resource path="res://utility/StoryParser.gd" type="Script" id=3]
+[ext_resource path="res://editor/StoryEditor.gd" type="Script" id=4]
+[ext_resource path="res://utility/StorySaveLoad.gd" type="Script" id=5]
+[ext_resource path="res://editor/FileDialogPanel.gd" type="Script" id=6]
 
 [node name="StoryEditor" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_edit_vertical_guides_": [  ]
@@ -91,7 +91,7 @@ margin_bottom = 568.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_offset = Vector2( -79, -20 )
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 
 [node name="AddNodePopupMenu" type="PopupMenu" parent="."]
 margin_right = 20.0
@@ -102,7 +102,7 @@ visible = false
 self_modulate = Color( 1, 1, 1, 0.545098 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -183,13 +183,13 @@ margin_right = 525.432
 margin_bottom = 475.005
 window_title = "Warning!"
 
-[node name="StoryPlayer" parent="." instance=ExtResource( 6 )]
+[node name="StoryPlayer" parent="." instance=ExtResource( 1 )]
 
 [node name="StoryParser" type="Node" parent="."]
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="StorySaveLoad" type="Node" parent="."]
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 [connection signal="pressed" from="VBox/HBox/NewButton" to="." method="_on_NewButton_pressed"]
 [connection signal="pressed" from="VBox/HBox/LoadButton" to="." method="_on_LoadButton_pressed"]
 [connection signal="pressed" from="VBox/HBox/SaveButton" to="." method="_on_SaveButton_pressed"]
@@ -197,7 +197,6 @@ script = ExtResource( 4 )
 [connection signal="pressed" from="VBox/HBox/TestStoryButton" to="." method="_on_TestStoryButton_pressed"]
 [connection signal="connection_request" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_request"]
 [connection signal="connection_to_empty" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_to_empty"]
-[connection signal="right_clicked" from="VBox/HBox2/StoryGraphEdit" to="." method="_on_StoryGraphEdit_right_clicked"]
 [connection signal="id_pressed" from="AddNodePopupMenu" to="." method="_on_AddNodePopupMenu_id_pressed"]
 [connection signal="export_request" from="FileDialogPanel" to="." method="_on_FileDialogPanel_export_request"]
 [connection signal="load_request" from="FileDialogPanel" to="." method="_on_FileDialogPanel_load_request"]

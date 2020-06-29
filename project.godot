@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "GraphEdit",
 "class": "EventEdit",
 "language": "GDScript",
-"path": "res://StoryGraphEdit.gd"
+"path": "res://editor/StoryGraphEdit.gd"
 }, {
 "base": "GraphNode",
 "class": "EventNode",
@@ -33,8 +33,12 @@ _global_script_class_icons={
 [application]
 
 config/name="FuzzyStoryEditor"
-run/main_scene="res://StoryEditor.tscn"
+run/main_scene="res://editor/StoryEditor.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Registry="*res://utility/Registry.gd"
 
 [rendering]
 
