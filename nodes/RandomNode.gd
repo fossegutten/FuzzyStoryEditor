@@ -7,7 +7,15 @@ const OUTCOME_SLOT_START := 1
 func _ready():
 	set_slot(0, true, SLOT, in_color, false, SLOT, out_color)
 	update_slots(outcomes_spin_box.value)
+	
+	to_dict(GraphEdit.new())
 
+func to_dict(graph_edit : GraphEdit) -> Dictionary:
+	var d : Dictionary = .to_dict(graph_edit)
+	d.node_type = "RandomNode"
+	
+	print(d)
+	return d
 
 func update_slots(choices : int) -> void:
 	assert(choices > 0)

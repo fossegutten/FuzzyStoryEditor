@@ -63,47 +63,12 @@ Here is your reward!",
 "to_port": 0
 } ],
 "node_name": "DialogNode2",
-"position": Vector2( 720, -100 ),
+"position": Vector2( 660, -100 ),
 "size": Vector2( 523, 218 )
 },
 "mood": "also nice",
 "node_id": 2,
 "node_type": "DialogNode"
-}, {
-"character": "Player",
-"choices": [ {
-"next_id": -1,
-"text": "Continue"
-} ],
-"dialog": "Thanks.
-Smell ya later!",
-"metadata": {
-"connections": [  ],
-"node_name": "DialogNode11",
-"position": Vector2( 1680, -40 ),
-"size": Vector2( 523, 218 )
-},
-"mood": "happy",
-"node_id": 11,
-"node_type": "DialogNode"
-}, {
-"class": "",
-"function": "print",
-"metadata": {
-"connections": [ {
-"from": "FunctionCallNode10",
-"from_port": 0,
-"to": "DialogNode11",
-"to_port": 0
-} ],
-"node_name": "FunctionCallNode10",
-"position": Vector2( 1300, 40 ),
-"size": Vector2( 332, 144 )
-},
-"next_id": 11,
-"node_id": 10,
-"node_type": "FunctionCallNode",
-"params": "\"Reward: 10 gold\""
 }, {
 "checkpoint": "start",
 "metadata": {
@@ -129,6 +94,9 @@ Smell ya later!",
 "character": "npc",
 "choices": [ {
 "next_id": 3,
+"text": "No!"
+}, {
+"next_id": -1,
 "text": "Ok..."
 } ],
 "dialog": "You're not strong enough. Please leave",
@@ -141,7 +109,7 @@ Smell ya later!",
 } ],
 "node_name": "DialogNode9",
 "position": Vector2( 60, 160 ),
-"size": Vector2( 523, 218 )
+"size": Vector2( 523, 247 )
 },
 "mood": "disappointed",
 "node_id": 9,
@@ -189,15 +157,22 @@ Smell ya later!",
 "node_id": 5,
 "node_type": "CheckpointNode"
 }, {
+"character": "Player",
+"choices": [ {
+"next_id": -1,
+"text": "Continue"
+} ],
+"dialog": "Thanks.
+Smell ya later!",
 "metadata": {
 "connections": [  ],
-"node_name": "JumpNode6",
-"position": Vector2( 920, 200 ),
-"size": Vector2( 291, 86 )
+"node_name": "DialogNode11",
+"position": Vector2( 1720, -40 ),
+"size": Vector2( 523, 218 )
 },
-"node_id": 6,
-"node_type": "JumpNode",
-"text": "steal_gold"
+"mood": "happy",
+"node_id": 11,
+"node_type": "DialogNode"
 }, {
 "metadata": {
 "connections": [ {
@@ -205,12 +180,89 @@ Smell ya later!",
 "from_port": 0,
 "to": "JumpNode6",
 "to_port": 0
+}, {
+"from": "RandomNode3",
+"from_port": 1,
+"to": "FunctionCallNode12",
+"to_port": 0
+}, {
+"from": "RandomNode3",
+"from_port": 2,
+"to": "FunctionCallNode12",
+"to_port": 0
+}, {
+"from": "RandomNode3",
+"from_port": 3,
+"to": "FunctionCallNode12",
+"to_port": 0
 } ],
 "node_name": "RandomNode3",
-"position": Vector2( 640, 200 ),
+"position": Vector2( 620, 220 ),
 "size": Vector2( 189, 145 )
 },
 "node_id": 3,
 "node_type": "RandomNode",
-"outcomes": [ 6, -1, -1, -1 ]
+"outcomes": [ 6, 12, 12, 12 ]
+}, {
+"class": "",
+"function": "print",
+"metadata": {
+"connections": [ {
+"from": "FunctionCallNode10",
+"from_port": 0,
+"to": "DialogNode11",
+"to_port": 0
+} ],
+"node_name": "FunctionCallNode10",
+"position": Vector2( 1340, 40 ),
+"size": Vector2( 332, 144 )
+},
+"next_id": 11,
+"node_id": 10,
+"node_type": "FunctionCallNode",
+"params": "Reward: 10 gold"
+}, {
+"class": "player",
+"function": "kill",
+"metadata": {
+"connections": [ {
+"from": "FunctionCallNode12",
+"from_port": 0,
+"to": "DialogNode4",
+"to_port": 0
+} ],
+"node_name": "FunctionCallNode12",
+"position": Vector2( 860, 300 ),
+"size": Vector2( 332, 144 )
+},
+"next_id": 4,
+"node_id": 12,
+"node_type": "FunctionCallNode",
+"params": ""
+}, {
+"metadata": {
+"connections": [  ],
+"node_name": "JumpNode6",
+"position": Vector2( 860, 180 ),
+"size": Vector2( 291, 86 )
+},
+"node_id": 6,
+"node_type": "JumpNode",
+"text": "steal_gold"
+}, {
+"character": "npc",
+"choices": [ {
+"next_id": -1,
+"text": "Continue"
+} ],
+"dialog": "I didn't expect this from him..",
+"metadata": {
+"connections": [  ],
+"node_name": "DialogNode4",
+"position": Vector2( 1420, 300 ),
+"size": Vector2( 523, 218 )
+},
+"mood": "disappointed",
+"node_id": 4,
+"node_type": "DialogNode"
 } ]

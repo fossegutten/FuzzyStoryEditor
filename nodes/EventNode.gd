@@ -27,9 +27,28 @@ func get_node_id() -> int:
 
 
 # TODO implement this instead of the "parser" script
-static func to_dict(node : EventNode) -> Dictionary:
-	
-	return {}
+func to_dict(graph_edit : GraphEdit) -> Dictionary:
+	var d : Dictionary = {
+		"node_id": get_node_id(),
+		"node_type": "EventNode",
+		"metadata": {
+				"node_name": name,
+				"position": offset,
+				"size": rect_size,
+				# see below, where we store all connections directly copied from the GraphEdit
+				"connections": get_connections(graph_edit)
+			},
+	}
+	return d
+
+func get_connections(graph_edit : GraphEdit) -> Array:
+	var connections : Array = []
+	for c in graph_edit.get_connection_list():
+		if c.from == self.name:
+			connections.append(c)
+#			node["metadata"]["connections"].append(c)
+	return connections
+
 
 static func new_from_dict(dict : Dictionary) -> EventNode:
 	var new_node : EventNode
