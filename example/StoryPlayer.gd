@@ -9,6 +9,8 @@ const EMPTY := -1
 
 export(Resource) var current_story : Resource setget set_current_story
 
+onready var text_helper : Node = $TextHelper
+onready var expression_parser : Node = $ExpressionParser
 
 func set_current_story(new_story : Resource) -> void:
 	# we do this check since we cannot export custom resources to godot editor
@@ -57,12 +59,20 @@ func process_story_node(node : Dictionary) -> void:
 	
 	elif node_type == "ConditionNode":
 		
+		var s : String = text_helper.inject_variables(node["text"])
+		
+		var result = expression_parser.parse(s)
+		
 		# TODO implement logic, for now we just skip to next
 		start_next_node(node["next_id"])
 		return
 	
 	elif node_type == "DialogNode":
-		$DialogPlayer.start_dialog(node.character, node.mood, node.dialog, node.choices)
+		
+		# inject variables from our registry
+		var dialog_text : String = text_helper.inject_variables(node.dialog)
+		
+		$DialogPlayer.start_dialog(node.character, node.mood, dialog_text, node.choices)
 		return
 		
 	elif node_type == "JumpNode":

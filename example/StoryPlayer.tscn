@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://example/StoryPlayer.gd" type="Script" id=1]
 [ext_resource path="res://example/DialogPlayer.gd" type="Script" id=2]
+[ext_resource path="res://utility/TextHelper.gd" type="Script" id=3]
+[ext_resource path="res://utility/ExpressionParser.gd" type="Script" id=4]
 
 [node name="StoryPlayer" type="Control"]
 anchor_right = 1.0
@@ -119,4 +121,10 @@ text = "Hide"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TextHelper" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="ExpressionParser" type="Node" parent="."]
+script = ExtResource( 4 )
 [connection signal="pressed" from="HideButton" to="." method="_on_HideButton_pressed"]
