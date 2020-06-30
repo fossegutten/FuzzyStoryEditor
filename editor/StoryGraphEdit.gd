@@ -11,7 +11,7 @@ onready var jump_node : PackedScene = preload("res://nodes/JumpNode.tscn")
 onready var random_node : PackedScene = preload("res://nodes/RandomNode.tscn")
 
 const POPUP_MENU_SIZE := Vector2(100, 100)
-const AUTO := -1
+const AUTO := -1337
 
 var new_node_offset : Vector2 = Vector2() setget set_new_node_offset
 

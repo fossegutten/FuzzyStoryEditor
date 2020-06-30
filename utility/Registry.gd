@@ -7,9 +7,6 @@ var registry : Dictionary = {
 	"P2_Level": get_player_level(2)
 }
 
-var my_name : String = "Ola"
-
-
 func lookup(key : String):
 	if registry.has(key):
 		return registry[key]
