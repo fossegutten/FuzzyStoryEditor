@@ -1,3 +1,5 @@
+![alt text](https://github.com/fossegutten/FuzzyStoryEditor/blob/master/icon.png "Icon")
+
 # Fuzzy Story Editor
 
 ## Free standalone event / dialog editor using visual scripting
@@ -12,6 +14,8 @@ Native support for Godot Engine, by using the resource files directly. JSON expo
 
 Feel free to open issues with bug reports and feature requests. I would like to keep the different node types to a minimum, to keep the codebase smaller.
 The idea is that your story / dialog player should contain the logic, and story files only contain the data.
+
+![alt text](https://github.com/fossegutten/FuzzyStoryEditor/blob/master/screenshot.PNG "Screenshot")
 
 ### Features and TODO:
 - [x] Save / load from custom godot engine resource files.
