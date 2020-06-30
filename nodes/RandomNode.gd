@@ -8,16 +8,29 @@ func _ready():
 	set_slot(0, true, SLOT, in_color, false, SLOT, out_color)
 	update_slots(outcomes_spin_box.value)
 	
-	to_dict(GraphEdit.new())
 
-func to_dict(graph_edit : GraphEdit) -> Dictionary:
-	var d : Dictionary = .to_dict(graph_edit)
-	d.node_type = "RandomNode"
+func to_dictionary() -> Dictionary:
+	var d : Dictionary = .to_dictionary()
+	d["node_type"] = "RandomNode"
+	d["outcomes"] = []
 	
-	print(d)
+	# make sure we store a value even if not connected
+	for i in get_connection_output_count():
+		d["outcomes"].append(EMPTY_NODE_ID)
+	
+	for c in get_my_connections():
+		var target : EventNode = get_parent().get_node(c.to)
+		d["outcomes"][c.from_port] = target.get_node_id()
+	
 	return d
 
+
 func update_slots(choices : int) -> void:
+	
+	# if we get updated from elsewhere, update UI also
+	if outcomes_spin_box.value != choices:
+		outcomes_spin_box.value = choices
+	
 	assert(choices > 0)
 	
 	var outcome_lines : Array = []

@@ -10,3 +10,17 @@ func get_checkpoint_text() -> String:
 
 func set_checkpoint_text(value : String) -> void:
 	$LineEdit.text = value
+
+
+func to_dictionary() -> Dictionary:
+	var d : Dictionary = .to_dictionary()
+	d["node_type"] = "CheckpointNode"
+	d["checkpoint"] = get_checkpoint_text()
+	
+	d["next_id"] = EMPTY_NODE_ID
+	
+	for c in get_my_connections():
+		var target : EventNode = get_parent().get_node(c.to)
+		d["next_id"] = target.get_node_id()
+	
+	return d

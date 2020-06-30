@@ -13,3 +13,11 @@ func set_text(value : String) -> void:
 
 func get_text() -> String:
 	return $TextEdit.text
+
+
+func to_dictionary() -> Dictionary:
+	var d : Dictionary = .to_dictionary()
+	d["node_type"] = "JumpNode"
+	d["text"] = get_text()
+	
+	return d

@@ -87,8 +87,31 @@ func update_slots(choices : int) -> void:
 #				move_child(c, CHOICE_SLOT_START + i)
 		
 		set_slot(CHOICE_SLOT_START + i, left_enabled, SLOT, in_color, right_enabled, SLOT, out_color)
-		
 
+func to_dictionary() -> Dictionary:
+	var d : Dictionary = .to_dictionary()
+	d["node_type"] = "DialogNode"
+	d["character"] = get_character_text()
+	d["mood"] = get_mood_text()
+	d["dialog"] = get_dialog_text()
+	d["choices"] = []
+	
+	assert(get_choice_lines().size() == get_connection_output_count())
+	
+	for i in get_choice_lines().size():
+		var choice_text : String = get_choice_lines()[i].text
+		var choice_next_id : int = EMPTY_NODE_ID
+		
+		for c in get_my_connections():
+			# it skips the port 0 if it's not open, and turns port 1 into 0, and so on
+#			if c.from == self.name and c.from_port == i:
+			if c.from_port == i:
+				var target : EventNode = get_parent().get_node(c.to)
+				choice_next_id = target.get_node_id()
+		d["choices"].append({"text": choice_text, "next_id": choice_next_id})
+	
+	return d
+	
 
 func _on_child_tree_exited():
 	rect_size = rect_min_size
