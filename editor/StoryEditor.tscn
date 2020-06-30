@@ -197,6 +197,7 @@ script = ExtResource( 5 )
 [connection signal="pressed" from="VBox/HBox/TestStoryButton" to="." method="_on_TestStoryButton_pressed"]
 [connection signal="connection_request" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_request"]
 [connection signal="connection_to_empty" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_to_empty"]
+[connection signal="right_clicked" from="VBox/HBox2/StoryGraphEdit" to="." method="_on_StoryGraphEdit_right_clicked"]
 [connection signal="id_pressed" from="AddNodePopupMenu" to="." method="_on_AddNodePopupMenu_id_pressed"]
 [connection signal="export_request" from="FileDialogPanel" to="." method="_on_FileDialogPanel_export_request"]
 [connection signal="load_request" from="FileDialogPanel" to="." method="_on_FileDialogPanel_load_request"]

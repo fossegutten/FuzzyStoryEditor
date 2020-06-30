@@ -21,7 +21,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-out_color = Color( 1, 0.701961, 0, 1 )
+out_color = Color( 0.827451, 0, 1, 1 )
 
 [node name="TextEdit" type="LineEdit" parent="."]
 margin_left = 20.0

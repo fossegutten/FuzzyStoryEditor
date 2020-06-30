@@ -26,3 +26,5 @@ func inject_variables(text : String) -> String:
 		text = text.insert(start_index, str(variable_value))
 	
 	return text
+
+

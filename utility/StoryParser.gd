@@ -76,11 +76,12 @@ func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> E
 	elif node_type == "FunctionCallNode":
 		node.set_class_text(dict["class"])
 		node.set_function_text(dict["function"])
+		node.set_params_text(dict["params"])
 		
-		var params : Array = dict["params"]
-		if params.size() > 0:
-			# convert array into string
-			node.set_params_text(str(params))
+#		var params : Array = dict["params"]
+#		if params.size() > 0:
+#			# convert array into string
+#			node.set_params_text(str(params))
 	elif node_type == "JumpNode":
 		node.set_text(dict["text"])
 	elif node_type == "RandomNode":
@@ -176,24 +177,34 @@ func graph_to_array(graph_edit : GraphEdit, event_nodes : Array) -> Array:
 			node["class"] = n.get_class_text()
 			node["function"] = n.get_function_text()
 			
-			var params_string : String = n.get_params_text()
-			var params : Array = []
+			# just store the params as a string, for simplicity
+			node["params"] = n.get_params_text()
 			
-			if params_string != "":
-				var p = str2var(n.get_params_text())
-#				print("Type: %s, Value: %s" % [typeof(p), p])
-				
-				# if we can convert to an array, just save it
-				if typeof(p) == TYPE_ARRAY:
-					params = p
-				# not an array, so just append the value into an array
-				else:
-					if typeof(p) == TYPE_STRING:
-						# might be an error, if intended to be an array
-						assert(!("[".is_subsequence_ofi(p) or "]".is_subsequence_ofi(p)))
-					params.append(p)
+			# TODO add some error checking for the
+#
+#			var params_string : String = n.get_params_text()
+#			var params
+##			var params : Array = []
+#
+#			if params_string != "":
+#				var p = str2var(n.get_params_text())
+##				print("Type: %s, Value: %s" % [typeof(p), p])
+#
+#				# new
+#
+#
+#				# old
+#				# if we can convert to an array, just save it
+##				if typeof(p) == TYPE_ARRAY:
+##					params = p
+##				# not an array, so just append the value into an array
+##				else:
+###					if typeof(p) == TYPE_STRING:
+##						# might be an error, if intended to be an array
+##						assert(!("[".is_subsequence_ofi(p) or "]".is_subsequence_ofi(p)))
+#					params.append(p)
 			
-			node["params"] = params
+#			node["params"] = params
 #			print("Type: %s value: %s" % [typeof(p), p])
 			
 			node["next_id"] = EMPTY

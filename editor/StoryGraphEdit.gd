@@ -80,12 +80,12 @@ func has_node_in_position(position : Vector2, from_global : bool) -> bool:
 	return false
 
 
-func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> void:
+func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> GraphNode:
 	
 	# create the string, but this depends on enum being similar to node name string
 	var type : String = EventNode.NodeType.keys()[enum_value].to_lower().capitalize().replacen(" ", "") + "Node"
 	
-	create_node_from_string(type, node_id)
+	return create_node_from_string(type, node_id)
 
 
 func create_node_from_string(node_type : String, node_id : int = AUTO) -> GraphNode:

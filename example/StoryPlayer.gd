@@ -23,6 +23,9 @@ func _ready():
 	$DialogPlayer.connect("dialog_completed", self, "start_next_node")
 	self.connect("story_completed", self, "hide")
 	hide()
+	
+	expression_parser.parse('print("test")')
+	expression_parser.parse("print('test')")
 #	start("start", current_story)
 
 
@@ -59,13 +62,20 @@ func process_story_node(node : Dictionary) -> void:
 	
 	elif node_type == "ConditionNode":
 		
+		# this is necessary to pull values from the registry
 		var s : String = text_helper.inject_variables(node["text"])
 		
 		var result = expression_parser.parse(s)
 		
-		# TODO implement logic, for now we just skip to next
-		start_next_node(node["next_id"])
-		return
+		if result == true:
+			start_next_node(node["next_id_true"])
+			return
+		elif result == false:
+			start_next_node(node["next_id_false"])
+			return
+		else:
+			print("Condition result was not a boolean: %s" % result)
+			
 	
 	elif node_type == "DialogNode":
 		
@@ -74,7 +84,51 @@ func process_story_node(node : Dictionary) -> void:
 		
 		$DialogPlayer.start_dialog(node.character, node.mood, dialog_text, node.choices)
 		return
+	
+	elif node_type == "FunctionCallNode":
 		
+		var target_string : String = node["class"]
+		var function_string : String = node["function"]
+		var params_string : String = node["params"]
+		# converts the params string to Variant, will return a string if there are some mistakes in brackets etc.
+		var params = str2var(params_string)
+#		print("%s %s" % [typeof(params), params])
+		# TODO add some error checking here
+		
+		
+		var target : Object = null
+		
+		# empty target, assumes we try to target globalscope
+		# not sure hof useful this is in a real game, but we can use print this way, for simple testing
+		if target_string == "":
+			var parse_string : String = function_string 
+			parse_string += "('%s')" % str(params)
+			
+			expression_parser.parse(parse_string)
+		
+		# this is where we call functions on classes, if not targeting globalscope
+		# there is probably a better way to do find a target class, like adding them to a registry, but this is intended to be a simple example
+		elif target_string == "self":
+			target = self
+		elif target_string == "Registry":
+			target = Registry
+		else:
+			printerr("Target does not exist: %s" % target_string)
+		
+		if target != null:
+			print(function_string, " ", target.has_method(function_string))
+			
+			if target.has_method(function_string):
+				if params.size() > 0:
+					target.call(function_string, params)
+				else:
+					target.call(function_string)
+		
+#		print("%s %s %s %s" % [target, target_string, function_string, params])
+		
+		start_next_node(node["next_id"])
+		return
+	
 	elif node_type == "JumpNode":
 		# jump node has no output connections, so we grab the checkpoint node by string
 		var target : Dictionary = current_story.get_checkpoint_node(node["text"])

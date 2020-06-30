@@ -3,7 +3,7 @@ extends Node
 
 var registry : Dictionary = {
 	"Time": OS.get_time(),
-	"P1_Level": get_player_level(1),
+	"player_level": get_player_level(1),
 	"P2_Level": get_player_level(2)
 }
 

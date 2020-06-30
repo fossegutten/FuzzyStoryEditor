@@ -5,27 +5,6 @@
 [resource]
 script = ExtResource( 1 )
 story_nodes = [ {
-"checkpoint": "start",
-"metadata": {
-"connections": [ {
-"from": "CheckpointNode0",
-"from_port": 0,
-"to": "DialogNode1",
-"to_port": 0
-}, {
-"from": "CheckpointNode0",
-"from_port": 0,
-"to": "DialogNode1",
-"to_port": 0
-} ],
-"node_name": "CheckpointNode0",
-"position": Vector2( -39, -102 ),
-"size": Vector2( 189, 86 )
-},
-"next_id": 1,
-"node_id": 0,
-"node_type": "CheckpointNode"
-}, {
 "character": "player",
 "choices": [ {
 "next_id": 2,
@@ -40,7 +19,7 @@ story_nodes = [ {
 "to_port": 0
 } ],
 "node_name": "DialogNode1",
-"position": Vector2( 200, -80 ),
+"position": Vector2( 60, -120 ),
 "size": Vector2( 523, 218 )
 },
 "mood": "nice",
@@ -49,82 +28,147 @@ story_nodes = [ {
 }, {
 "metadata": {
 "connections": [ {
-"from": "RandomNode3",
+"from": "ConditionNode8",
 "from_port": 0,
-"to": "JumpNode4",
+"to": "DialogNode1",
 "to_port": 0
 }, {
-"from": "RandomNode3",
+"from": "ConditionNode8",
 "from_port": 1,
-"to": "JumpNode6",
+"to": "DialogNode9",
 "to_port": 0
 } ],
-"node_name": "RandomNode3",
-"position": Vector2( 1440, 40 ),
-"size": Vector2( 189, 107 )
+"node_name": "ConditionNode8",
+"position": Vector2( -320, -40 ),
+"size": Vector2( 291, 124 )
 },
-"node_id": 3,
-"node_type": "RandomNode",
-"outcomes": [ 4, 6 ]
+"next_id_false": 9,
+"next_id_true": 1,
+"node_id": 8,
+"node_type": "ConditionNode",
+"text": "<var>player_level</var> >= 10"
 }, {
 "character": "npc",
 "choices": [ {
-"next_id": 3,
+"next_id": 10,
 "text": "Continue"
 } ],
-"dialog": "hi!",
+"dialog": "hi!
+Here is your reward!",
 "metadata": {
 "connections": [ {
 "from": "DialogNode2",
 "from_port": 0,
-"to": "RandomNode3",
+"to": "FunctionCallNode10",
 "to_port": 0
 } ],
 "node_name": "DialogNode2",
-"position": Vector2( 820, -60 ),
+"position": Vector2( 720, -100 ),
 "size": Vector2( 523, 218 )
 },
 "mood": "also nice",
 "node_id": 2,
 "node_type": "DialogNode"
 }, {
-"metadata": {
-"connections": [  ],
-"node_name": "JumpNode4",
-"position": Vector2( 1800, 40 ),
-"size": Vector2( 291, 86 )
-},
-"node_id": 4,
-"node_type": "JumpNode",
-"text": "start"
-}, {
-"metadata": {
-"connections": [  ],
-"node_name": "JumpNode6",
-"position": Vector2( 1800, 160 ),
-"size": Vector2( 291, 86 )
-},
-"node_id": 6,
-"node_type": "JumpNode",
-"text": "warp"
-}, {
-"character": "player",
+"character": "Player",
 "choices": [ {
 "next_id": -1,
 "text": "Continue"
 } ],
-"dialog": "Did you see that!?",
+"dialog": "Thanks.
+Smell ya later!",
 "metadata": {
 "connections": [  ],
+"node_name": "DialogNode11",
+"position": Vector2( 1680, -40 ),
+"size": Vector2( 523, 218 )
+},
+"mood": "happy",
+"node_id": 11,
+"node_type": "DialogNode"
+}, {
+"class": "",
+"function": "print",
+"metadata": {
+"connections": [ {
+"from": "FunctionCallNode10",
+"from_port": 0,
+"to": "DialogNode11",
+"to_port": 0
+} ],
+"node_name": "FunctionCallNode10",
+"position": Vector2( 1300, 40 ),
+"size": Vector2( 332, 144 )
+},
+"next_id": 11,
+"node_id": 10,
+"node_type": "FunctionCallNode",
+"params": "\"Reward: 10 gold\""
+}, {
+"checkpoint": "start",
+"metadata": {
+"connections": [ {
+"from": "CheckpointNode0",
+"from_port": 0,
+"to": "ConditionNode8",
+"to_port": 0
+}, {
+"from": "CheckpointNode0",
+"from_port": 0,
+"to": "ConditionNode8",
+"to_port": 0
+} ],
+"node_name": "CheckpointNode0",
+"position": Vector2( -580, -40 ),
+"size": Vector2( 189, 86 )
+},
+"next_id": 8,
+"node_id": 0,
+"node_type": "CheckpointNode"
+}, {
+"character": "npc",
+"choices": [ {
+"next_id": 3,
+"text": "Ok..."
+} ],
+"dialog": "You're not strong enough. Please leave",
+"metadata": {
+"connections": [ {
+"from": "DialogNode9",
+"from_port": 0,
+"to": "RandomNode3",
+"to_port": 0
+} ],
+"node_name": "DialogNode9",
+"position": Vector2( 60, 160 ),
+"size": Vector2( 523, 218 )
+},
+"mood": "disappointed",
+"node_id": 9,
+"node_type": "DialogNode"
+}, {
+"character": "player",
+"choices": [ {
+"next_id": 10,
+"text": "Continue"
+} ],
+"dialog": "To fast for you, gramps!",
+"metadata": {
+"connections": [ {
+"from": "DialogNode7",
+"from_port": 0,
+"to": "FunctionCallNode10",
+"to_port": 0
+} ],
 "node_name": "DialogNode7",
-"position": Vector2( 1320, 320 ),
+"position": Vector2( 600, 480 ),
 "size": Vector2( 523, 218 )
 },
 "mood": "proud",
 "node_id": 7,
 "node_type": "DialogNode"
 }, {
-"checkpoint": "warp",
+"checkpoint": "steal_gold",
 "metadata": {
 "connections": [ {
 "from": "CheckpointNode5",
@@ -138,10 +182,35 @@ story_nodes = [ {
 "to_port": 0
 } ],
 "node_name": "CheckpointNode5",
-"position": Vector2( 1000, 340 ),
+"position": Vector2( 200, 480 ),
 "size": Vector2( 189, 86 )
 },
 "next_id": 7,
 "node_id": 5,
 "node_type": "CheckpointNode"
+}, {
+"metadata": {
+"connections": [  ],
+"node_name": "JumpNode6",
+"position": Vector2( 920, 200 ),
+"size": Vector2( 291, 86 )
+},
+"node_id": 6,
+"node_type": "JumpNode",
+"text": "steal_gold"
+}, {
+"metadata": {
+"connections": [ {
+"from": "RandomNode3",
+"from_port": 0,
+"to": "JumpNode6",
+"to_port": 0
+} ],
+"node_name": "RandomNode3",
+"position": Vector2( 640, 200 ),
+"size": Vector2( 189, 145 )
+},
+"node_id": 3,
+"node_type": "RandomNode",
+"outcomes": [ 6, -1, -1, -1 ]
 } ]
