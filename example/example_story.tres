@@ -22,7 +22,7 @@ story_nodes = [ {
 "position": Vector2( 60, -120 ),
 "size": Vector2( 523, 218 )
 },
-"mood": "nice",
+"mood": "neutral",
 "node_id": 1,
 "node_type": "DialogNode"
 }, {
@@ -53,8 +53,8 @@ story_nodes = [ {
 "next_id": 10,
 "text": "Continue"
 } ],
-"dialog": "hi!
-Here is your reward!",
+"dialog": "Hi!
+Here is your reward for becoming level 10.",
 "metadata": {
 "connections": [ {
 "from": "DialogNode2",
@@ -66,18 +66,13 @@ Here is your reward!",
 "position": Vector2( 660, -100 ),
 "size": Vector2( 523, 218 )
 },
-"mood": "also nice",
+"mood": "satisfied",
 "node_id": 2,
 "node_type": "DialogNode"
 }, {
 "checkpoint": "start",
 "metadata": {
 "connections": [ {
-"from": "CheckpointNode0",
-"from_port": 0,
-"to": "ConditionNode8",
-"to_port": 0
-}, {
 "from": "CheckpointNode0",
 "from_port": 0,
 "to": "ConditionNode8",
@@ -132,18 +127,13 @@ Here is your reward!",
 "position": Vector2( 600, 480 ),
 "size": Vector2( 523, 218 )
 },
-"mood": "proud",
+"mood": "lucky",
 "node_id": 7,
 "node_type": "DialogNode"
 }, {
 "checkpoint": "steal_gold",
 "metadata": {
 "connections": [ {
-"from": "CheckpointNode5",
-"from_port": 0,
-"to": "DialogNode7",
-"to_port": 0
-}, {
 "from": "CheckpointNode5",
 "from_port": 0,
 "to": "DialogNode7",
@@ -222,8 +212,8 @@ Smell ya later!",
 "node_type": "FunctionCallNode",
 "params": "Reward: 10 gold"
 }, {
-"class": "player",
-"function": "kill",
+"class": "self",
+"function": "kill_player",
 "metadata": {
 "connections": [ {
 "from": "FunctionCallNode12",

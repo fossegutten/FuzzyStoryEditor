@@ -1,0 +1,134 @@
+[
+	{
+		"node_id": 1,
+		"node_type": "DialogNode",
+		"character": "player",
+		"mood": "neutral",
+		"dialog": "hello",
+		"choices": [
+			{
+				"text": "Continue",
+				"next_id": 2
+			}
+		]
+	},
+	{
+		"node_id": 8,
+		"node_type": "ConditionNode",
+		"text": "<var>player_level</var> >= 10",
+		"next_id_true": 1,
+		"next_id_false": 9
+	},
+	{
+		"node_id": 2,
+		"node_type": "DialogNode",
+		"character": "npc",
+		"mood": "satisfied",
+		"dialog": "Hi!\nHere is your reward for becoming level 10.",
+		"choices": [
+			{
+				"text": "Continue",
+				"next_id": 10
+			}
+		]
+	},
+	{
+		"node_id": 0,
+		"node_type": "CheckpointNode",
+		"checkpoint": "start",
+		"next_id": 8
+	},
+	{
+		"node_id": 9,
+		"node_type": "DialogNode",
+		"character": "npc",
+		"mood": "disappointed",
+		"dialog": "You're not strong enough. Please leave",
+		"choices": [
+			{
+				"text": "No!",
+				"next_id": 3
+			},
+			{
+				"text": "Ok...",
+				"next_id": -1
+			}
+		]
+	},
+	{
+		"node_id": 7,
+		"node_type": "DialogNode",
+		"character": "player",
+		"mood": "lucky",
+		"dialog": "To fast for you, gramps!",
+		"choices": [
+			{
+				"text": "Continue",
+				"next_id": 10
+			}
+		]
+	},
+	{
+		"node_id": 5,
+		"node_type": "CheckpointNode",
+		"checkpoint": "steal_gold",
+		"next_id": 7
+	},
+	{
+		"node_id": 11,
+		"node_type": "DialogNode",
+		"character": "Player",
+		"mood": "happy",
+		"dialog": "Thanks.\nSmell ya later!",
+		"choices": [
+			{
+				"text": "Continue",
+				"next_id": -1
+			}
+		]
+	},
+	{
+		"node_id": 3,
+		"node_type": "RandomNode",
+		"outcomes": [
+			6,
+			12,
+			12,
+			12
+		]
+	},
+	{
+		"node_id": 10,
+		"node_type": "FunctionCallNode",
+		"class": "",
+		"function": "print",
+		"params": "Reward: 10 gold",
+		"next_id": 11
+	},
+	{
+		"node_id": 12,
+		"node_type": "FunctionCallNode",
+		"class": "self",
+		"function": "kill_player",
+		"params": "",
+		"next_id": 4
+	},
+	{
+		"node_id": 6,
+		"node_type": "JumpNode",
+		"text": "steal_gold"
+	},
+	{
+		"node_id": 4,
+		"node_type": "DialogNode",
+		"character": "npc",
+		"mood": "disappointed",
+		"dialog": "I didn't expect this from him..",
+		"choices": [
+			{
+				"text": "Continue",
+				"next_id": -1
+			}
+		]
+	}
+]
