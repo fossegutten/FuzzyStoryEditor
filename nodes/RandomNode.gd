@@ -18,7 +18,7 @@ func to_dictionary() -> Dictionary:
 	for i in get_connection_output_count():
 		d["outcomes"].append(EMPTY_NODE_ID)
 	
-	for c in get_my_connections():
+	for c in d["metadata"]["connections"]:
 		var target : EventNode = get_parent().get_node(c.to)
 		d["outcomes"][c.from_port] = target.get_node_id()
 	

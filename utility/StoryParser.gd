@@ -12,7 +12,8 @@ func array_to_graph(graph_edit : GraphEdit, story : FuzzyStory) -> bool:
 	# first add all nodes to the graph edit
 	var dict_nodes : Array = []
 	for i in event_node_dicts:
-		var node : EventNode = create_node_from_dictionary(graph_edit, i)
+		var node : EventNode = graph_edit.create_node_from_dictionary(i)
+#		var node : EventNode = create_node_from_dictionary(graph_edit, i)
 		if node != null:
 			dict_nodes.append(node)
 	
@@ -36,6 +37,7 @@ func array_to_graph(graph_edit : GraphEdit, story : FuzzyStory) -> bool:
 # TODO add checks for everything here
 func create_node_from_dictionary(graph_edit : GraphEdit, dict : Dictionary) -> EventNode:
 	
+	# Assumes we have all the other data, if we have the node_type
 	if !dict.has("node_type"):
 		printerr("Node not created. Not valid dictionary: %s" % dict)
 		return null

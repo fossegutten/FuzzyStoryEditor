@@ -38,7 +38,14 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Registry="*res://utility/Registry.gd"
+Registry="*res://global/Registry.gd"
+Global="*res://global/Global.gd"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/dpi/allow_hidpi=true
 
 [rendering]
 

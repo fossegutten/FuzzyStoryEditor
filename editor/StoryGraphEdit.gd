@@ -3,12 +3,7 @@ class_name EventEdit
 
 signal right_clicked(position)
 
-onready var dialog_node : PackedScene = preload("res://nodes/DialogNode.tscn")
-onready var condition_node : PackedScene = preload("res://nodes/ConditionNode.tscn")
-onready var checkpoint_node : PackedScene = preload("res://nodes/CheckpointNode.tscn")
-onready var function_call_node : PackedScene = preload("res://nodes/FunctionCallNode.tscn")
-onready var jump_node : PackedScene = preload("res://nodes/JumpNode.tscn")
-onready var random_node : PackedScene = preload("res://nodes/RandomNode.tscn")
+
 
 const POPUP_MENU_SIZE := Vector2(100, 100)
 const AUTO := -1337
@@ -88,44 +83,82 @@ func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> GraphNode:
 	return create_node_from_string(type, node_id)
 
 
+# creates, connects, childs, assigns id, renames and returns
 func create_node_from_string(node_type : String, node_id : int = AUTO) -> GraphNode:
 	
-	var new_node : EventNode
+	if not Global.NODE_SCENES.has(node_type):
+		printerr("undefined event node type '%s', returning" % node_type)
+		return null
 	
-	match node_type:
-		"DialogNode":
-			new_node = dialog_node.instance()
-		"CheckpointNode":
-			new_node = checkpoint_node.instance()
-		"ConditionNode":
-			new_node = condition_node.instance()
-		"FunctionCallNode":
-			new_node = function_call_node.instance()
-		"JumpNode":
-			new_node = jump_node.instance()
-		"RandomNode":
-			new_node = random_node.instance()
-		_:
-			printerr("undefined event node type '%s', returning" % node_type)
-			return null
+	var node : EventNode = Global.NODE_SCENES[node_type].instance()
 	
-	new_node.connect("close_request", self, "_on_EventNode_close_request", [new_node])
-	new_node.connect("resize_request", self, "_on_EventNode_resize_request", [new_node])
+	node.connect("close_request", self, "_on_EventNode_close_request", [node])
+	node.connect("resize_request", self, "_on_EventNode_resize_request", [node])
 	
-	add_child(new_node)
+	add_child(node)
 	
 	if node_id == AUTO:
 		node_id = generate_free_node_id()
-#		assign_node_id(new_node)
+#		assign_node_id(node)
 #	else:
-	new_node.set_node_id(node_id)
+	node.set_node_id(node_id)
 	
-	new_node.offset = new_node_offset
+	node.offset = new_node_offset
 	
-	new_node.name = "%s%d" % [node_type, new_node.get_node_id()]
-	new_node.title = "%s - ID: %d" % [node_type, new_node.get_node_id()]
+	node.name = "%s%d" % [node_type, node.get_node_id()]
+	node.title = "%s - ID: %d" % [node_type, node.get_node_id()]
 	
-	return new_node
+	return node
+
+
+# restores everything except connections, including position and node specifics
+func create_node_from_dictionary(d : Dictionary) -> EventNode:
+	
+	if not d.has("node_type"):
+		printerr("Not valid dictionary '%s', returning" % d)
+		return null
+	
+	var node_type : String = d["node_type"]
+	
+	var node : EventNode = create_node_from_string(node_type, d["node_id"])
+	
+	node.offset = d["metadata"]["position"]
+	node.rect_size = d["metadata"]["size"]
+	
+	# Restore node specific data
+	if node_type == "CheckpointNode":
+		node.set_checkpoint_text(d["checkpoint"])
+	
+	elif node_type == "ConditionNode":
+		node.set_text(d["text"])
+	
+	elif node_type == "DialogNode":
+		node.set_character_text(d["character"])
+		node.set_mood_text(d["mood"])
+		node.set_dialog_text(d["dialog"])
+		
+		var choices : Array = d["choices"]
+		node.update_slots(choices.size())
+		
+		for i in choices.size():
+			var choice_line : LineEdit = node.get_choice_lines()[i]
+			choice_line.text = choices[i]["text"]
+	
+	elif node_type == "FunctionCallNode":
+		node.set_class_text(d["class"])
+		node.set_function_text(d["function"])
+		node.set_params_text(d["params"])
+	
+	elif node_type == "JumpNode":
+		node.set_text(d["text"])
+	
+	elif node_type == "RandomNode":
+		node.update_slots(d["outcomes"].size())
+	
+	else:
+		printerr("Node type '%s' not implemented." % node_type)
+	
+	return node
 
 
 func _on_EventNode_resize_request(size : Vector2, requester : GraphNode) -> void:

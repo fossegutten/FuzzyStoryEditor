@@ -102,7 +102,7 @@ func to_dictionary() -> Dictionary:
 		var choice_text : String = get_choice_lines()[i].text
 		var choice_next_id : int = EMPTY_NODE_ID
 		
-		for c in get_my_connections():
+		for c in d["metadata"]["connections"]:
 			# it skips the port 0 if it's not open, and turns port 1 into 0, and so on
 #			if c.from == self.name and c.from_port == i:
 			if c.from_port == i:

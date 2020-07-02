@@ -35,7 +35,7 @@ func to_dictionary() -> Dictionary:
 		"node_id": get_node_id(),
 		"node_type": "EventNode",
 		"metadata": {
-				"node_name": name,
+				"node_name": name, # node name should not be needed for anything
 				"position": offset,
 				"size": rect_size,
 				"connections": get_my_connections()
@@ -43,6 +43,8 @@ func to_dictionary() -> Dictionary:
 	}
 	return d
 
+
+# We should always be children of a GraphEdit, so we can ask parent for connections
 func get_my_connections() -> Array:
 	var connections : Array = []
 	if get_parent() is GraphEdit:
@@ -50,9 +52,3 @@ func get_my_connections() -> Array:
 			if c.from == self.name:
 				connections.append(c)
 	return connections
-
-
-static func new_from_dict(dict : Dictionary) -> EventNode:
-	var new_node : EventNode
-	
-	return new_node

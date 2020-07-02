@@ -17,14 +17,6 @@ func _ready():
 			# capitalize also removes underscores
 			var s : String = EventNode.NodeType.keys()[i].to_lower().capitalize()#.replace("_", " ")
 			j.add_item(s, i)
-	
-#	for i in [add_node_popup_menu, add_node_menu_button.get_popup()]:
-#		i.add_item("Dialog", EventNode.NodeType.DIALOG)
-#		i.add_item("Checkpoint", EventNode.NodeType.CHECKPOINT)
-#		i.add_item("Condition", EventNode.NodeType.CONDITION)
-#		i.add_item("FunctionCall", EventNode.NodeType.FUNCTION_CALL)
-#		i.add_item("Jump", EventNode.NodeType.JUMP)
-#		i.add_item("Random", EventNode.NodeType.RANDOM)
 
 
 func _on_StoryGraphEdit_right_clicked(position):

@@ -26,7 +26,7 @@ func to_dictionary() -> Dictionary:
 	d["next_id_true"] = EMPTY_NODE_ID
 	d["next_id_false"] = EMPTY_NODE_ID
 	
-	for c in get_my_connections():
+	for c in d["metadata"]["connections"]:
 		# it skips the port 0 if it's not open, and turns port 1 into 0, and so on
 		var target : EventNode = get_parent().get_node(c.to)
 		if c.from_port == 0:

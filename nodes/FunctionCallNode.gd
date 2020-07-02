@@ -8,17 +8,22 @@ func _ready():
 func get_class_text() -> String:
 	return $HBoxClass/LineEdit.text
 
+
 func set_class_text(value : String) -> void:
 	$HBoxClass/LineEdit.text = value
+
 
 func get_function_text() -> String:
 	return $HBoxFunction/LineEdit.text
 
+
 func set_function_text(value : String) -> void:
 	$HBoxFunction/LineEdit.text = value
 
+
 func get_params_text() -> String:
 	return $HBoxParams/LineEdit.text
+
 
 func set_params_text(value : String) -> void:
 	$HBoxParams/LineEdit.text = value
@@ -34,7 +39,7 @@ func to_dictionary() -> Dictionary:
 	
 	d["next_id"] = EMPTY_NODE_ID
 	
-	for c in get_my_connections():
+	for c in d["metadata"]["connections"]:
 		var target : EventNode = get_parent().get_node(c.to)
 		d["next_id"] = target.get_node_id()
 	

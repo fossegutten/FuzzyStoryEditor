@@ -19,7 +19,7 @@ func to_dictionary() -> Dictionary:
 	
 	d["next_id"] = EMPTY_NODE_ID
 	
-	for c in get_my_connections():
+	for c in d["metadata"]["connections"]:
 		var target : EventNode = get_parent().get_node(c.to)
 		d["next_id"] = target.get_node_id()
 	
