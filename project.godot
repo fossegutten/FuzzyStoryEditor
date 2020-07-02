@@ -40,6 +40,7 @@ config/icon="res://icon.png"
 
 Registry="*res://global/Registry.gd"
 Global="*res://global/Global.gd"
+ConfigSaveLoad="*res://global/ConfigSaveLoad.gd"
 
 [display]
 

@@ -8,7 +8,6 @@ const POPUP_MENU_SIZE := Vector2(100, 100)
 
 
 func _ready():
-	
 	var p : PopupMenu = add_node_menu_button.get_popup()
 	p.connect("id_pressed", self, "_on_AddNodeMenuButton_id_pressed")
 	
