@@ -3,8 +3,6 @@ class_name EventEdit
 
 signal right_clicked(position)
 
-
-
 const POPUP_MENU_SIZE := Vector2(100, 100)
 const AUTO := -1337
 
@@ -23,6 +21,55 @@ func set_new_node_offset(value : Vector2, from_global : bool = true) -> void:
 #		new_node_offset = new_node_offset.snapped(Vector2.ONE * snap_distance)
 
 
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == BUTTON_RIGHT:
+			for c in get_children():
+				if c is GraphNode:
+					var zoomed_rect := Rect2(c.rect_global_position, c.rect_size * zoom)
+					if zoomed_rect.has_point(get_global_mouse_position()):
+						return
+			
+			emit_signal("right_clicked", get_global_mouse_position())
+
+
+func serialize_event_nodes() -> Array:
+	var dictionaries := []
+	
+	for i in get_event_nodes():
+		
+		if i is EventNode:
+			var d : Dictionary = i.to_dictionary()
+			if d.node_type == "EventNode":
+				printerr("EventNode type '%s' not implemented." % i.name)
+			else:
+				dictionaries.append(d)
+		else:
+			printerr("Not an EventNode: '%s'." % i)
+	
+	return dictionaries
+
+
+func deserialize_event_nodes(story : FuzzyStory) -> void:
+	
+	var event_node_dicts : Array = story.get_story_nodes()
+	
+	# first add all nodes to the graph edit
+	var dict_nodes : Array = []
+	for i in event_node_dicts:
+		var node : EventNode = create_node_from_dictionary(i)
+		if node != null:
+			dict_nodes.append(node)
+	
+	# then connect them all
+	for i in event_node_dicts:
+		
+		var metadata : Dictionary = i["metadata"]
+		var connections : Array = metadata["connections"]
+		for j in connections:
+			assert(j.from == metadata["node_name"])
+			connect_node(j.from, j.from_port, j.to, j.to_port)
+
 
 func is_node_id_free(id : int) -> bool:
 	for i in get_event_nodes():
@@ -32,8 +79,6 @@ func is_node_id_free(id : int) -> bool:
 
 
 func generate_free_node_id() -> int:
-#func assign_node_id(node : EventNode) -> int:
-	
 	var used_ids : Array = []
 	for i in get_event_nodes():
 		used_ids.append(i.get_node_id())
@@ -43,8 +88,6 @@ func generate_free_node_id() -> int:
 		new_id += 1
 	
 	return new_id
-#	node.set_node_id(new_id)
-#	print("New id %s for node %s" % [new_id, node])
 
 
 func get_event_nodes() -> Array:
@@ -56,7 +99,6 @@ func get_event_nodes() -> Array:
 
 
 func clear_all_event_nodes() -> void:
-	
 	clear_connections()
 	
 	for i in get_event_nodes():
@@ -76,7 +118,6 @@ func has_node_in_position(position : Vector2, from_global : bool) -> bool:
 
 
 func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> GraphNode:
-	
 	# create the string, but this depends on enum being similar to node name string
 	var type : String = EventNode.NodeType.keys()[enum_value].to_lower().capitalize().replacen(" ", "") + "Node"
 	
@@ -99,8 +140,7 @@ func create_node_from_string(node_type : String, node_id : int = AUTO) -> GraphN
 	
 	if node_id == AUTO:
 		node_id = generate_free_node_id()
-#		assign_node_id(node)
-#	else:
+	
 	node.set_node_id(node_id)
 	
 	node.offset = new_node_offset
@@ -192,10 +232,6 @@ func _on_StoryGraphEdit_connection_request(from, from_slot, to, to_slot):
 		printerr("Error connecting node: %s" % err)
 
 
-#func _on_GraphEdit_connection_from_empty(to, to_slot, release_position):
-	# TODO add a new node creation popup?
-
-
 func _on_StoryGraphEdit_connection_to_empty(from, from_slot, release_position):
 	# disconnect the from slot
 	for i in get_connection_list():
@@ -204,17 +240,4 @@ func _on_StoryGraphEdit_connection_to_empty(from, from_slot, release_position):
 	
 	# TODO add a new node creation popup?
 
-func _gui_input(event):
-#func _on_GraphEdit_gui_input(event):
-	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == BUTTON_RIGHT:
-			for c in get_children():
-				if c is GraphNode:
-					var zoomed_rect := Rect2(c.rect_global_position, c.rect_size * zoom)
-					if zoomed_rect.has_point(get_global_mouse_position()):
-						return
-			
-			emit_signal("right_clicked", get_global_mouse_position())
-#			add_node_popup_menu.popup(Rect2(get_global_mouse_position(), POPUP_MENU_SIZE))
-#			new_node_offset = (get_global_mouse_position() + scroll_offset) / zoom - rect_global_position
 

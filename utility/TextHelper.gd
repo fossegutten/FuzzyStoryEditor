@@ -1,5 +1,6 @@
 extends Node
 
+# credit to https://github.com/EXPWorlds for these tag methods
 
 func get_tagged_text(tag : String, text : String) -> String:
 	var start_tag : String = "<" + tag + ">"
@@ -10,7 +11,6 @@ func get_tagged_text(tag : String, text : String) -> String:
 	return text.substr(start_index, substr_length)
 
 
-# credit to https://github.com/EXPWorlds
 func inject_variables(text : String) -> String:
 	var variable_count : int = text.count("<var>")
 	assert(variable_count == text.count("</var>"))

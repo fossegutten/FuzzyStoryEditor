@@ -12,6 +12,7 @@ export(NodePath) var graph_edit_path : NodePath
 
 var current_load_path : String = ""
 
+
 func _ready():
 	hide()
 

@@ -64,25 +64,22 @@ func _on_FileDialogPanel_new_request():
 func _on_FileDialogPanel_load_request(path):
 	graph_edit.clear_all_event_nodes()
 	
-	# make sure the old nodes are removed before we load in new ones
+	# make sure the old nodes are removed before we load in new ones, to prevent ID conflicts
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
 	
-	var res : FuzzyStory = $StorySaveLoad.load_resource(path)
-	$StoryParser.array_to_graph(graph_edit, res)
+	var story : FuzzyStory = $StorySaveLoad.load_resource(path)
+	graph_edit.deserialize_event_nodes(story)
 
 
 func _on_FileDialogPanel_save_request(path):
-	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
-	$StorySaveLoad.save_as_resource(arr, path)
+	$StorySaveLoad.save_as_resource(graph_edit.serialize_event_nodes(), path)
 
 
 func _on_FileDialogPanel_export_request(path):
-	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
-	$StorySaveLoad.save_as_json(arr, path)
+	$StorySaveLoad.save_as_json(graph_edit.serialize_event_nodes(), path)
 
 
 func _on_TestStoryButton_pressed():
-	var arr : Array = $StoryParser.graph_to_array(graph_edit, graph_edit.get_event_nodes())
-	var story : FuzzyStory = $StorySaveLoad.create_story_resource(arr)
+	var story : FuzzyStory = $StorySaveLoad.create_story_resource(graph_edit.serialize_event_nodes())
 	$StoryPlayer.start("start", story)
