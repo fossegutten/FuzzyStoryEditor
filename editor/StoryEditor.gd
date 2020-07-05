@@ -20,25 +20,16 @@ func _ready():
 
 func _on_StoryGraphEdit_right_clicked(position):
 	add_node_popup_menu.popup(Rect2(get_global_mouse_position(), POPUP_MENU_SIZE))
-	graph_edit.set_new_node_offset(get_global_mouse_position(), true)
 
 
 func _on_AddNodeMenuButton_id_pressed(id):
-	
-	graph_edit.update_node_offset(false)
-#	var step : Vector2 = Vector2(40, 40)
-#	var target_pos : Vector2 = step
-#
-#	while(graph_edit.has_node_in_position(target_pos, false)):
-#		target_pos += step
-#
-#	graph_edit.set_new_node_offset(target_pos, false)
-	
-	graph_edit.create_node_from_enum(id)
+	var node : EventNode = graph_edit.create_node_from_enum(id)
+	node.offset = graph_edit.update_node_offset(Vector2(40, 40), false)
 
 
 func _on_AddNodePopupMenu_id_pressed(id):
-	graph_edit.create_node_from_enum(id)
+	var node : EventNode = graph_edit.create_node_from_enum(id)
+	node.offset = graph_edit.update_node_offset(add_node_popup_menu.rect_global_position, true)
 
 
 func _on_NewButton_pressed():

@@ -7,38 +7,26 @@ const NODE_OFFSET_STEP := Vector2(40, 40)
 const POPUP_MENU_SIZE := Vector2(100, 100)
 const AUTO := -1337
 
-var new_node_offset : Vector2 = Vector2() setget set_new_node_offset
 
-# input in global position
-func set_new_node_offset(value : Vector2, from_global : bool = true) -> void:
+func update_node_offset(from_pos : Vector2, from_global : bool, ignore_zoom : bool = false) -> Vector2:
+	var target_pos : Vector2 = from_pos
 	
 	if from_global:
-		value -= rect_global_position
+		target_pos -= rect_global_position
 	
-	new_node_offset = (scroll_offset + value) / zoom
+	# TODO move this below the while loop?
+	if !ignore_zoom:
+		target_pos = (scroll_offset + target_pos) / zoom
 	
-	# this caused all kinds of trouble
-#	if use_snap:
-#		new_node_offset = new_node_offset.snapped(Vector2.ONE * snap_distance)
-
-func update_node_offset(from_global : bool) -> Vector2:
-	var target_pos : Vector2 = NODE_OFFSET_STEP
-	
-	while(has_node_in_position(target_pos, from_global)):
+	while(has_node_in_position(target_pos)):
 		target_pos += NODE_OFFSET_STEP
-	
-	set_new_node_offset(target_pos, from_global)
 	
 	return target_pos
 
 
-func has_node_in_position(position : Vector2, from_global : bool) -> bool:
-#	if from_global:
-	# TODO, if needed later
+func has_node_in_position(position : Vector2) -> bool:
 	for i in get_event_nodes():
-		print(position, i.rect_position)
-		if position.is_equal_approx(i.rect_position):
-#		if min(position.x - i.rect_position.x, position.y - i.rect_position.y) <= snap_distance:
+		if position.is_equal_approx(i.offset):
 			return true
 	return false
 
@@ -46,34 +34,48 @@ func has_node_in_position(position : Vector2, from_global : bool) -> bool:
 func _gui_input(event):
 	if event is InputEventKey:
 		if event.pressed:
-			if event.scancode == KEY_C and event.control:
-				pass
+			# duplicate selected nodes
 			if event.scancode == KEY_D and event.control:
 				for i in get_event_nodes():
 					if i.selected:
 						
 						var d : Dictionary = i.to_dictionary()
 						d["node_id"] = generate_free_node_id()
-						d["metadata"]["position"] += update_node_offset(true)
-#						d["metadata"]["position"] = i.offset + Vector2(20, 20)
-
-						var n : EventNode = create_node_from_dictionary(d)
-#
+						d["metadata"]["position"] = update_node_offset(d["metadata"]["position"], false, true)
+						d["metadata"]["connections"] = []
 						
-#						update_node_offset(false)
+						var n : EventNode = create_node_from_dictionary(d)
+						
 #						var n : EventNode = i.duplicate()
 #						n.set_node_id(generate_free_node_id())
-#						n.offset += update_node_offset(true)
+#						n.offset = update_node_offset(n.offset, false)
 #						add_child(n)
 						
 						n.selected = true
 						i.selected = false
-						
-			if event.scancode == KEY_V and event.control:
-				# copy
-				print(event.control)
-				pass
-		pass
+			
+			# save node template
+			if event.scancode == KEY_S and event.control:
+				var selected : Array = []
+				
+				for i in get_event_nodes():
+					if i.selected:
+						selected.append(i)
+				
+				if selected.size() == 1:
+					# create node template
+					var d : Dictionary = selected[0].to_dictionary()
+					d["node_id"] = EventNode.EMPTY_NODE_ID
+					d["metadata"]["node_name"] = d["node_type"] + "Template"
+					d["metadata"]["position"] = Vector2.ZERO
+					d["metadata"]["connections"] = []
+					
+					# TODO save in config file
+					
+				elif selected.size() > 1:
+					# TODO add better warning
+					printerr("Only one node template can be saved at a time, deselect the other nodes")
+	
 	
 	if event is InputEventMouseButton:
 		
@@ -160,9 +162,6 @@ func clear_all_event_nodes() -> void:
 		i.queue_free()
 
 
-
-
-
 func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> EventNode:
 	# create the string, but this depends on enum being similar to node name string
 	var type : String = EventNode.NodeType.keys()[enum_value].to_lower().capitalize().replacen(" ", "") + "Node"
@@ -182,14 +181,13 @@ func create_node_from_string(node_type : String, node_id : int = AUTO) -> EventN
 	node.connect("close_request", self, "_on_EventNode_close_request", [node])
 	node.connect("resize_request", self, "_on_EventNode_resize_request", [node])
 	
+	
 	add_child(node)
 	
 	if node_id == AUTO:
 		node_id = generate_free_node_id()
 	
 	node.set_node_id(node_id)
-	
-	node.offset = new_node_offset
 	
 	node.name = "%s%d" % [node_type, node.get_node_id()]
 	node.title = "%s - ID: %d" % [node_type, node.get_node_id()]
