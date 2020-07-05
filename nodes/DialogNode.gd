@@ -8,8 +8,6 @@ onready var choice_spin_box : SpinBox = $ChoicesHBox/ChoicesSpinBox
 const CHOICE_SLOT_START := 4
 
 func _ready():
-	show_close = true
-	resizable = true
 	set_slot(0, true, SLOT, in_color, false, SLOT, out_color)
 	update_slots(choice_spin_box.value)
 

@@ -3,6 +3,7 @@ class_name EventEdit
 
 signal right_clicked(position)
 
+const NODE_OFFSET_STEP := Vector2(40, 40)
 const POPUP_MENU_SIZE := Vector2(100, 100)
 const AUTO := -1337
 
@@ -20,9 +21,62 @@ func set_new_node_offset(value : Vector2, from_global : bool = true) -> void:
 #	if use_snap:
 #		new_node_offset = new_node_offset.snapped(Vector2.ONE * snap_distance)
 
+func update_node_offset(from_global : bool) -> Vector2:
+	var target_pos : Vector2 = NODE_OFFSET_STEP
+	
+	while(has_node_in_position(target_pos, from_global)):
+		target_pos += NODE_OFFSET_STEP
+	
+	set_new_node_offset(target_pos, from_global)
+	
+	return target_pos
+
+
+func has_node_in_position(position : Vector2, from_global : bool) -> bool:
+#	if from_global:
+	# TODO, if needed later
+	for i in get_event_nodes():
+		print(position, i.rect_position)
+		if position.is_equal_approx(i.rect_position):
+#		if min(position.x - i.rect_position.x, position.y - i.rect_position.y) <= snap_distance:
+			return true
+	return false
+
 
 func _gui_input(event):
+	if event is InputEventKey:
+		if event.pressed:
+			if event.scancode == KEY_C and event.control:
+				pass
+			if event.scancode == KEY_D and event.control:
+				for i in get_event_nodes():
+					if i.selected:
+						
+						var d : Dictionary = i.to_dictionary()
+						d["node_id"] = generate_free_node_id()
+						d["metadata"]["position"] += update_node_offset(true)
+#						d["metadata"]["position"] = i.offset + Vector2(20, 20)
+
+						var n : EventNode = create_node_from_dictionary(d)
+#
+						
+#						update_node_offset(false)
+#						var n : EventNode = i.duplicate()
+#						n.set_node_id(generate_free_node_id())
+#						n.offset += update_node_offset(true)
+#						add_child(n)
+						
+						n.selected = true
+						i.selected = false
+						
+			if event.scancode == KEY_V and event.control:
+				# copy
+				print(event.control)
+				pass
+		pass
+	
 	if event is InputEventMouseButton:
+		
 		if event.pressed and event.button_index == BUTTON_RIGHT:
 			for c in get_children():
 				if c is GraphNode:
@@ -106,18 +160,10 @@ func clear_all_event_nodes() -> void:
 		i.queue_free()
 
 
-func has_node_in_position(position : Vector2, from_global : bool) -> bool:
-#	if from_global:
-	# TODO, if needed later
-	
-	for i in get_event_nodes():
-		if position.is_equal_approx(i.rect_position):
-#		if min(position.x - i.rect_position.x, position.y - i.rect_position.y) <= snap_distance:
-			return true
-	return false
 
 
-func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> GraphNode:
+
+func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> EventNode:
 	# create the string, but this depends on enum being similar to node name string
 	var type : String = EventNode.NodeType.keys()[enum_value].to_lower().capitalize().replacen(" ", "") + "Node"
 	
@@ -125,7 +171,7 @@ func create_node_from_enum(enum_value : int, node_id : int = AUTO) -> GraphNode:
 
 
 # creates, connects, childs, assigns id, renames and returns
-func create_node_from_string(node_type : String, node_id : int = AUTO) -> GraphNode:
+func create_node_from_string(node_type : String, node_id : int = AUTO) -> EventNode:
 	
 	if not Global.NODE_SCENES.has(node_type):
 		printerr("undefined event node type '%s', returning" % node_type)

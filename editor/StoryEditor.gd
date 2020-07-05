@@ -25,13 +25,14 @@ func _on_StoryGraphEdit_right_clicked(position):
 
 func _on_AddNodeMenuButton_id_pressed(id):
 	
-	var step : Vector2 = Vector2(40, 40)
-	var target_pos : Vector2 = step
-	
-	while(graph_edit.has_node_in_position(target_pos, false)):
-		target_pos += step
-	
-	graph_edit.set_new_node_offset(target_pos, false)
+	graph_edit.update_node_offset(false)
+#	var step : Vector2 = Vector2(40, 40)
+#	var target_pos : Vector2 = step
+#
+#	while(graph_edit.has_node_in_position(target_pos, false)):
+#		target_pos += step
+#
+#	graph_edit.set_new_node_offset(target_pos, false)
 	
 	graph_edit.create_node_from_enum(id)
 
