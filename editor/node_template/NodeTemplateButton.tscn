@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://editor/node_template/NodeTemplateButton.gd" type="Script" id=1]
+[ext_resource path="res://editor/node_template/node_template_button_normal.png" type="Texture" id=2]
+[ext_resource path="res://editor/node_template/node_template_button_focus.png" type="Texture" id=3]
+
+[node name="NodeTemplateButton" type="TextureButton"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture_normal = ExtResource( 2 )
+texture_focused = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "some text"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

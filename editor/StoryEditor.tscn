@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://example/StoryPlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://editor/StoryGraphEdit.gd" type="Script" id=2]
+[ext_resource path="res://editor/HelpButton.gd" type="Script" id=3]
 [ext_resource path="res://editor/StoryEditor.gd" type="Script" id=4]
 [ext_resource path="res://utility/StorySaveLoad.gd" type="Script" id=5]
 [ext_resource path="res://editor/FileDialogPanel.gd" type="Script" id=6]
+[ext_resource path="res://editor/GithubButton.gd" type="Script" id=7]
+[ext_resource path="res://editor/node_template/NodeTemplatePopupPanel.tscn" type="PackedScene" id=8]
 
 [node name="StoryEditor" type="Control"]
 anchor_right = 1.0
@@ -48,6 +51,9 @@ margin_left = 135.0
 margin_right = 187.0
 margin_bottom = 20.0
 text = "Export"
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="VSeparator" type="VSeparator" parent="VBox/HBox"]
 margin_left = 191.0
@@ -61,16 +67,48 @@ margin_bottom = 20.0
 text = "Add Node"
 flat = false
 
-[node name="VSeparator2" type="VSeparator" parent="VBox/HBox"]
+[node name="SaveNodeButton" type="Button" parent="VBox/HBox"]
 margin_left = 278.0
-margin_right = 282.0
+margin_right = 357.0
+margin_bottom = 20.0
+text = "Save Node"
+
+[node name="LoadNodeButton" type="Button" parent="VBox/HBox"]
+margin_left = 361.0
+margin_right = 441.0
+margin_bottom = 20.0
+text = "Load Node"
+
+[node name="VSeparator2" type="VSeparator" parent="VBox/HBox"]
+margin_left = 445.0
+margin_right = 449.0
 margin_bottom = 20.0
 
 [node name="TestStoryButton" type="Button" parent="VBox/HBox"]
-margin_left = 286.0
-margin_right = 361.0
+margin_left = 453.0
+margin_right = 528.0
 margin_bottom = 20.0
 text = "Test story"
+
+[node name="VSeparator3" type="VSeparator" parent="VBox/HBox"]
+margin_left = 532.0
+margin_right = 536.0
+margin_bottom = 20.0
+
+[node name="HelpButton" type="Button" parent="VBox/HBox"]
+margin_left = 540.0
+margin_right = 582.0
+margin_bottom = 20.0
+text = "Help"
+script = ExtResource( 3 )
+help_popup_path = NodePath("../../../HelpPopupPanel")
+
+[node name="GithubButton" type="Button" parent="VBox/HBox"]
+margin_left = 586.0
+margin_right = 641.0
+margin_bottom = 20.0
+text = "Github"
+script = ExtResource( 7 )
 
 [node name="HSeparator" type="HSeparator" parent="VBox"]
 margin_top = 24.0
@@ -95,6 +133,36 @@ script = ExtResource( 2 )
 [node name="AddNodePopupMenu" type="PopupMenu" parent="."]
 margin_right = 20.0
 margin_bottom = 20.0
+
+[node name="HelpPopupPanel" type="PopupPanel" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -249.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HelpPopupPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+text = "Hotkeys:
+
+Duplicate selected nodes:
+Ctrl + D
+
+Save selected node as template:
+Ctrl + S
+
+Load node template:
+Ctrl + L"
+
+[node name="NodeTemplatePopupPanel" parent="." instance=ExtResource( 8 )]
 
 [node name="FileDialogPanel" type="Panel" parent="."]
 visible = false
@@ -183,6 +251,7 @@ margin_bottom = 475.005
 window_title = "Warning!"
 
 [node name="StoryPlayer" parent="." instance=ExtResource( 1 )]
+visible = false
 
 [node name="StorySaveLoad" type="Node" parent="."]
 script = ExtResource( 5 )
@@ -191,6 +260,8 @@ script = ExtResource( 5 )
 [connection signal="pressed" from="VBox/HBox/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="VBox/HBox/ExportButton" to="." method="_on_ExportButton_pressed"]
 [connection signal="pressed" from="VBox/HBox/TestStoryButton" to="." method="_on_TestStoryButton_pressed"]
+[connection signal="pressed" from="VBox/HBox/HelpButton" to="VBox/HBox/HelpButton" method="_on_HelpButton_pressed"]
+[connection signal="pressed" from="VBox/HBox/GithubButton" to="VBox/HBox/GithubButton" method="_on_GithubButton_pressed"]
 [connection signal="connection_request" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_request"]
 [connection signal="connection_to_empty" from="VBox/HBox2/StoryGraphEdit" to="VBox/HBox2/StoryGraphEdit" method="_on_StoryGraphEdit_connection_to_empty"]
 [connection signal="right_clicked" from="VBox/HBox2/StoryGraphEdit" to="." method="_on_StoryGraphEdit_right_clicked"]

@@ -24,8 +24,8 @@ func _ready():
 	self.connect("story_completed", self, "hide")
 	hide()
 	
-	expression_parser.parse('print("test")')
-	expression_parser.parse("print('test')")
+#	expression_parser.parse('print("test")')
+#	expression_parser.parse("print('test')")
 #	start("start", current_story)
 
 
