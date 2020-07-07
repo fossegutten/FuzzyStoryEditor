@@ -2,6 +2,7 @@ extends GraphEdit
 class_name EventEdit
 
 signal right_clicked(position)
+signal save_node_template_request(dictionary)
 
 const NODE_OFFSET_STEP := Vector2(40, 40)
 const POPUP_MENU_SIZE := Vector2(100, 100)
@@ -36,45 +37,11 @@ func _gui_input(event):
 		if event.pressed:
 			# duplicate selected nodes
 			if event.scancode == KEY_D and event.control:
-				for i in get_event_nodes():
-					if i.selected:
-						
-						var d : Dictionary = i.to_dictionary()
-						d["node_id"] = generate_free_node_id()
-						d["metadata"]["position"] = update_node_offset(d["metadata"]["position"], false, true)
-						d["metadata"]["connections"] = []
-						
-						var n : EventNode = create_node_from_dictionary(d)
-						
-#						var n : EventNode = i.duplicate()
-#						n.set_node_id(generate_free_node_id())
-#						n.offset = update_node_offset(n.offset, false)
-#						add_child(n)
-						
-						n.selected = true
-						i.selected = false
+				duplicate_selected_nodes()
 			
 			# save node template
 			if event.scancode == KEY_S and event.control:
-				var selected : Array = []
-				
-				for i in get_event_nodes():
-					if i.selected:
-						selected.append(i)
-				
-				if selected.size() == 1:
-					# create node template
-					var d : Dictionary = selected[0].to_dictionary()
-					d["node_id"] = EventNode.EMPTY_NODE_ID
-					d["metadata"]["node_name"] = d["node_type"] + "Template"
-					d["metadata"]["position"] = Vector2.ZERO
-					d["metadata"]["connections"] = []
-					
-					# TODO save in config file
-					
-				elif selected.size() > 1:
-					# TODO add better warning
-					printerr("Only one node template can be saved at a time, deselect the other nodes")
+				save_selected_node_as_template()
 	
 	
 	if event is InputEventMouseButton:
@@ -125,6 +92,49 @@ func deserialize_event_nodes(story : FuzzyStory) -> void:
 		for j in connections:
 			assert(j.from == metadata["node_name"])
 			connect_node(j.from, j.from_port, j.to, j.to_port)
+
+
+func duplicate_selected_nodes() -> void:
+	for i in get_event_nodes():
+		if i.selected:
+			
+			var d : Dictionary = i.to_dictionary()
+			d["node_id"] = generate_free_node_id()
+			d["metadata"]["position"] = update_node_offset(d["metadata"]["position"], false, true)
+			d["metadata"]["connections"] = []
+			
+			var n : EventNode = create_node_from_dictionary(d)
+			
+#						var n : EventNode = i.duplicate()
+#						n.set_node_id(generate_free_node_id())
+#						n.offset = update_node_offset(n.offset, false)
+#						add_child(n)
+			
+			n.selected = true
+			i.selected = false
+
+
+func save_selected_node_as_template() -> void:
+	var selected : Array = []
+	
+	for i in get_event_nodes():
+		if i.selected:
+			selected.append(i)
+	
+	if selected.size() == 1:
+		# create node template
+		var d : Dictionary = selected[0].to_dictionary()
+		d["node_id"] = EventNode.EMPTY_NODE_ID
+		d["metadata"]["node_name"] = d["node_type"] + "Template"
+		d["metadata"]["position"] = Vector2.ZERO
+		d["metadata"]["connections"] = []
+		
+		# TODO save in config file
+		emit_signal("save_node_template_request", d)
+		
+	elif selected.size() > 1:
+		# TODO add better warning
+		printerr("Only one node template can be saved at a time, deselect the other nodes")
 
 
 func is_node_id_free(id : int) -> bool:

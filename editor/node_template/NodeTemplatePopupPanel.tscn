@@ -25,7 +25,7 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 230.0
+margin_right = 400.0
 margin_bottom = 20.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
@@ -56,12 +56,12 @@ selected = 0
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 24.0
-margin_right = 230.0
+margin_right = 400.0
 margin_bottom = 28.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 32.0
-margin_right = 230.0
+margin_right = 400.0
 margin_bottom = 712.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -71,4 +71,14 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
+
+[node name="SaveConfirmationDialog" type="ConfirmationDialog" parent="."]
+visible = true
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 404.0
+margin_bottom = 716.0
+rect_min_size = Vector2( 400, 140 )
+dialog_text = "Are you sure you want to overwrite node template?"
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="confirmed" from="SaveConfirmationDialog" to="." method="_on_SaveConfirmationDialog_confirmed"]

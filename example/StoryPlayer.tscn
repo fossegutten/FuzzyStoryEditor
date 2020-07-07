@@ -36,8 +36,8 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="DialogPlayer"]
 margin_left = 200.0
 margin_top = 100.0
-margin_right = 824.0
-margin_bottom = 500.0
+margin_right = 1080.0
+margin_bottom = 620.0
 color = Color( 0.0235294, 0.160784, 0.12549, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -46,8 +46,8 @@ __meta__ = {
 [node name="Margin" type="MarginContainer" parent="DialogPlayer"]
 margin_left = 200.0
 margin_top = 100.0
-margin_right = 824.0
-margin_bottom = 500.0
+margin_right = 1080.0
+margin_bottom = 620.0
 custom_constants/margin_right = 50
 custom_constants/margin_top = 25
 custom_constants/margin_left = 50
@@ -56,57 +56,57 @@ custom_constants/margin_bottom = 25
 [node name="VBox" type="VBoxContainer" parent="DialogPlayer/Margin"]
 margin_left = 50.0
 margin_top = 25.0
-margin_right = 574.0
-margin_bottom = 375.0
+margin_right = 830.0
+margin_bottom = 495.0
 custom_constants/separation = 20
 
 [node name="HBoxLabels" type="HBoxContainer" parent="DialogPlayer/Margin/VBox"]
-margin_right = 524.0
+margin_right = 780.0
 margin_bottom = 14.0
 custom_constants/separation = 50
 alignment = 1
 
 [node name="LabelChar" type="Label" parent="DialogPlayer/Margin/VBox/HBoxLabels"]
-margin_left = 189.0
-margin_right = 248.0
+margin_left = 317.0
+margin_right = 376.0
 margin_bottom = 14.0
 text = "character"
 
 [node name="LabelMood" type="Label" parent="DialogPlayer/Margin/VBox/HBoxLabels"]
-margin_left = 298.0
-margin_right = 335.0
+margin_left = 426.0
+margin_right = 463.0
 margin_bottom = 14.0
 text = "mood"
 
 [node name="HSeparator" type="HSeparator" parent="DialogPlayer/Margin/VBox"]
 margin_top = 34.0
-margin_right = 524.0
+margin_right = 780.0
 margin_bottom = 38.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="DialogPlayer/Margin/VBox"]
 margin_top = 58.0
-margin_right = 524.0
-margin_bottom = 286.0
+margin_right = 780.0
+margin_bottom = 406.0
 size_flags_vertical = 3
 bbcode_enabled = true
 bbcode_text = "asdasd a"
 text = "asdasd a"
 
 [node name="HSeparator2" type="HSeparator" parent="DialogPlayer/Margin/VBox"]
-margin_top = 306.0
-margin_right = 524.0
-margin_bottom = 310.0
+margin_top = 426.0
+margin_right = 780.0
+margin_bottom = 430.0
 
 [node name="HBoxButtons" type="HBoxContainer" parent="DialogPlayer/Margin/VBox"]
-margin_top = 330.0
-margin_right = 524.0
-margin_bottom = 350.0
+margin_top = 450.0
+margin_right = 780.0
+margin_bottom = 470.0
 custom_constants/separation = 20
 alignment = 1
 
 [node name="Button" type="Button" parent="DialogPlayer/Margin/VBox/HBoxButtons"]
-margin_left = 228.0
-margin_right = 295.0
+margin_left = 356.0
+margin_right = 423.0
 margin_bottom = 20.0
 text = "example"
 

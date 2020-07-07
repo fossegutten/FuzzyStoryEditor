@@ -16,8 +16,23 @@ func get_template() -> Dictionary:
 func update_visuals() -> void:
 	if template.size() == 0:
 		$Label.text = "Empty"
-		self_modulate = Color.gray
+		self_modulate = Color.darkgray
 	else:
-		$Label.text = "Something"
-		self_modulate = Color.green
-		pass
+		var node_type : String = template["node_type"]
+		
+		$Label.text = node_type
+		match node_type:
+			"DialogNode":
+				self_modulate = Color.aqua
+			"CheckpointNode":
+				self_modulate = Color.pink
+			"ConditionNode":
+				self_modulate = Color.orange
+			"FunctionCallNode":
+				self_modulate = Color.greenyellow
+			"JumpNode":
+				self_modulate = Color.orchid
+			"RandomNode":
+				self_modulate = Color.lightcoral
+			_:
+				self_modulate = Color.red

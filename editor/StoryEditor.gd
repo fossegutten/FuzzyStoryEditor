@@ -1,8 +1,9 @@
 extends Control
 
-onready var graph_edit : GraphEdit = $VBox/HBox2/StoryGraphEdit
 onready var add_node_popup_menu : PopupMenu = $AddNodePopupMenu
 onready var add_node_menu_button : MenuButton = $VBox/HBox/AddNodeMenuButton
+onready var graph_edit : GraphEdit = $VBox/HBox2/StoryGraphEdit
+onready var node_template_popup : PopupPanel = $NodeTemplatePopupPanel
 
 const POPUP_MENU_SIZE := Vector2(100, 100)
 
@@ -31,7 +32,7 @@ func _on_AddNodePopupMenu_id_pressed(id):
 	var node : EventNode = graph_edit.create_node_from_enum(id)
 	node.offset = graph_edit.update_node_offset(add_node_popup_menu.rect_global_position, true)
 
-
+### STORY
 func _on_NewButton_pressed():
 	$FileDialogPanel.open_new_confirmation_dialog()
 
@@ -74,3 +75,26 @@ func _on_FileDialogPanel_export_request(path):
 func _on_TestStoryButton_pressed():
 	var story : FuzzyStory = $StorySaveLoad.create_story_resource(graph_edit.serialize_event_nodes())
 	$StoryPlayer.start("start", story)
+
+### NODE TEMPLATES
+func _on_NodeTemplatesButton_pressed():
+	node_template_popup.open()
+
+
+func _on_SaveNodeButton_pressed():
+	graph_edit.save_selected_node_as_template()
+
+
+func _on_StoryGraphEdit_save_node_template_request(dictionary):
+	node_template_popup.request_template_save(dictionary)
+
+
+
+
+func _on_NodeTemplatePopupPanel_node_template_load_request(dictionary):
+	if dictionary.size() == 0:
+		return
+	
+	dictionary["metadata"]["position"] = graph_edit.update_node_offset(Vector2(40, 40), false)
+	var node : EventNode = graph_edit.create_node_from_dictionary(dictionary)
+#	node.offset = graph_edit.update_node_offset(add_node_popup_menu.rect_global_position, true)
