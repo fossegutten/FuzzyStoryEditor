@@ -14,6 +14,7 @@ var current_load_path : String = ""
 
 
 func _ready():
+	Global.connect("warning_message", self, "_on_Global_warning_message")
 	hide()
 
 
@@ -85,7 +86,7 @@ func _on_FileDialogExport_file_selected(path):
 	emit_signal("export_request", path)
 
 
-func _on_StorySaveLoad_save_failed(msg):
-	show()
+func _on_Global_warning_message(msg):
 	$WarningDialog.dialog_text = msg
 	$WarningDialog.popup_centered(confirmation_dialog_size)
+	show()

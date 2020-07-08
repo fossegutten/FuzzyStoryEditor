@@ -122,19 +122,19 @@ func save_selected_node_as_template() -> void:
 			selected.append(i)
 	
 	if selected.size() == 1:
-		# create node template
+		# create node template and fire it with the signal
 		var d : Dictionary = selected[0].to_dictionary()
 		d["node_id"] = EventNode.EMPTY_NODE_ID
 		d["metadata"]["node_name"] = d["node_type"] + "Template"
 		d["metadata"]["position"] = Vector2.ZERO
 		d["metadata"]["connections"] = []
 		
-		# TODO save in config file
 		emit_signal("save_node_template_request", d)
 		
+	elif selected.size() == 0:
+		Global.emit_signal("warning_message", "No node is selected, can't save template.")
 	elif selected.size() > 1:
-		# TODO add better warning
-		printerr("Only one node template can be saved at a time, deselect the other nodes")
+		Global.emit_signal("warning_message", "Only one node template can be saved at a time, please deselect the other nodes.")
 
 
 func is_node_id_free(id : int) -> bool:

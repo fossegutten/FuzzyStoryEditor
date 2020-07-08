@@ -1,0 +1,112 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://editor/node_template/NodeTemplates.gd" type="Script" id=2]
+
+[node name="NodeTemplates" type="MarginContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -265.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 400.0
+margin_bottom = 720.0
+color = Color( 0.172549, 0.0823529, 0.176471, 1 )
+
+[node name="VBox" type="VBoxContainer" parent="."]
+margin_right = 400.0
+margin_bottom = 720.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox"]
+margin_right = 400.0
+margin_bottom = 20.0
+alignment = 1
+
+[node name="HeaderLabel" type="Label" parent="VBox/HBoxContainer"]
+margin_left = 119.0
+margin_top = 3.0
+margin_right = 222.0
+margin_bottom = 17.0
+text = "Node templates"
+
+[node name="VSeparator" type="VSeparator" parent="VBox/HBoxContainer"]
+margin_left = 226.0
+margin_right = 230.0
+margin_bottom = 20.0
+custom_constants/separation = 4
+
+[node name="CloseButton" type="Button" parent="VBox/HBoxContainer"]
+margin_left = 234.0
+margin_right = 281.0
+margin_bottom = 20.0
+text = "Close"
+
+[node name="HSeparator" type="HSeparator" parent="VBox"]
+margin_top = 24.0
+margin_right = 400.0
+margin_bottom = 28.0
+
+[node name="DescriptionLabel" type="Label" parent="VBox"]
+margin_top = 32.0
+margin_right = 400.0
+margin_bottom = 63.0
+text = "asd asdasd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd"
+autowrap = true
+
+[node name="HSeparator2" type="HSeparator" parent="VBox"]
+margin_top = 67.0
+margin_right = 400.0
+margin_bottom = 71.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+margin_top = 75.0
+margin_bottom = 676.0
+size_flags_horizontal = 2
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="VBox/ScrollContainer"]
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+margin_top = 680.0
+margin_right = 400.0
+margin_bottom = 720.0
+alignment = 1
+
+[node name="SaveModeCheckButton" type="CheckButton" parent="VBox/HBox"]
+margin_left = 125.0
+margin_right = 275.0
+margin_bottom = 40.0
+size_flags_horizontal = 0
+text = "Save mode"
+
+[node name="SaveConfirmationDialog" type="ConfirmationDialog" parent="."]
+visible = true
+margin_right = 400.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 400, 140 )
+window_title = "Overwrite node template"
+dialog_text = "Are you sure you want to overwrite node template?"
+
+[node name="EraseConfirmationDialog" type="ConfirmationDialog" parent="."]
+visible = true
+margin_right = 400.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 400, 140 )
+window_title = "Erase node template"
+dialog_text = "Are you sure you want to erase node template?"
+[connection signal="pressed" from="VBox/HBoxContainer/CloseButton" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="VBox/HBox/SaveModeCheckButton" to="." method="_on_SaveModeCheckButton_pressed"]
+[connection signal="confirmed" from="SaveConfirmationDialog" to="." method="_on_SaveConfirmationDialog_confirmed"]
+[connection signal="confirmed" from="EraseConfirmationDialog" to="." method="_on_EraseConfirmationDialog_confirmed"]

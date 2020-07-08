@@ -3,7 +3,7 @@ extends Control
 onready var add_node_popup_menu : PopupMenu = $AddNodePopupMenu
 onready var add_node_menu_button : MenuButton = $VBox/HBox/AddNodeMenuButton
 onready var graph_edit : GraphEdit = $VBox/HBox2/StoryGraphEdit
-onready var node_template_popup : PopupPanel = $NodeTemplatePopupPanel
+onready var node_templates : Control = $VBox/HBox2/NodeTemplates
 
 const POPUP_MENU_SIZE := Vector2(100, 100)
 
@@ -78,7 +78,10 @@ func _on_TestStoryButton_pressed():
 
 ### NODE TEMPLATES
 func _on_NodeTemplatesButton_pressed():
-	node_template_popup.open()
+	if node_templates.visible:
+		node_templates.hide()
+	else:
+		node_templates.open()
 
 
 func _on_SaveNodeButton_pressed():
@@ -86,15 +89,17 @@ func _on_SaveNodeButton_pressed():
 
 
 func _on_StoryGraphEdit_save_node_template_request(dictionary):
-	node_template_popup.request_template_save(dictionary)
+	node_templates.request_template_save(dictionary)
 
 
-
-
-func _on_NodeTemplatePopupPanel_node_template_load_request(dictionary):
+func _on_NodeTemplates_node_template_load_request(dictionary):
 	if dictionary.size() == 0:
 		return
 	
+	# we have to create a new unique ID for the node
+	dictionary["node_id"] = graph_edit.generate_free_node_id()
 	dictionary["metadata"]["position"] = graph_edit.update_node_offset(Vector2(40, 40), false)
+	
 	var node : EventNode = graph_edit.create_node_from_dictionary(dictionary)
 #	node.offset = graph_edit.update_node_offset(add_node_popup_menu.rect_global_position, true)
+

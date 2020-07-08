@@ -1,5 +1,6 @@
 extends TextureButton
 
+const PREVIEW_POPUP_SIZE := Vector2(200, 200)
 
 onready var popup_menu : PopupMenu = $PopupMenu
 
@@ -45,3 +46,5 @@ func update_visuals() -> void:
 				self_modulate = Color.lightcoral
 			_:
 				self_modulate = Color.red
+	
+	hint_tooltip = Global.beautify_dictionary(template)

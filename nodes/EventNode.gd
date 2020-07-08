@@ -3,7 +3,7 @@ class_name EventNode
 
 const EMPTY_NODE_ID := -1
 
-# there is only one slot type, so use this
+# there is only one slot type, so we always use zero
 const SLOT := 0
 
 enum NodeType {
@@ -29,7 +29,6 @@ func get_node_id() -> int:
 	return node_id
 
 
-# TODO implement this instead of the "parser" script
 func to_dictionary() -> Dictionary:
 	var d : Dictionary = {
 		"node_id": get_node_id(),

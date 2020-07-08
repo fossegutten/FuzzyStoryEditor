@@ -27,15 +27,14 @@ func save_as_resource(node_array : Array, path : String = resource_path) -> void
 	if ResourceLoader.exists(path):
 		var res := ResourceLoader.load(path)
 		if !res is FuzzyStory:
-			# TODO add some error popups
-			emit_signal("save_failed", "Save failed. Cannot overwrite other resource types")
+			Global.emit_signal("warning_message", "Save failed. Cannot overwrite other resource types")
 			return
 	
 	var story := create_story_resource(node_array)
 	
 	var err := ResourceSaver.save(path, story)
 	if ResourceSaver.save(path, story) != OK:
-		emit_signal("save_failed", "Save resource failed. Error code: %s" % err)
+		Global.emit_signal("warning_message", "Save resource failed. Error code: %s" % err)
 
 
 func save_as_json(node_array : Array,  path : String, keep_metadata : bool = false) -> void:
@@ -53,7 +52,7 @@ func save_as_json(node_array : Array,  path : String, keep_metadata : bool = fal
 	var json_string : String = JSON.print(node_array, "	", false)
 	
 	if !validate_json(json_string) == "":
-		emit_signal("save_failed", "Save JSON failed. Invalid JSON data")
+		Global.emit_signal("warning_message", "Save JSON failed. Invalid JSON data")
 		return
 	
 	var file := File.new()
@@ -62,4 +61,4 @@ func save_as_json(node_array : Array,  path : String, keep_metadata : bool = fal
 		file.store_string(json_string)
 		file.close()
 	else:
-		emit_signal("save_failed", "Save JSON failed. Error code: %s" % err)
+		Global.emit_signal("warning_message", "Save JSON failed. Error code: %s" % err)
