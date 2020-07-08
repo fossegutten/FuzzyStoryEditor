@@ -3,6 +3,7 @@
 [ext_resource path="res://editor/node_template/NodeTemplatePopupPanel.gd" type="Script" id=2]
 
 [node name="NodeTemplatePopupPanel" type="PopupPanel"]
+visible = true
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,41 +27,43 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 400.0
-margin_bottom = 20.0
+margin_bottom = 14.0
+alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_top = 3.0
-margin_right = 103.0
-margin_bottom = 17.0
+[node name="HeaderLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 148.0
+margin_right = 251.0
+margin_bottom = 14.0
 text = "Node templates"
 
 [node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-margin_left = 107.0
-margin_right = 111.0
-margin_bottom = 20.0
+visible = false
+margin_left = 216.0
+margin_right = 246.0
+margin_bottom = 14.0
+custom_constants/separation = 30
 
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_left = 115.0
-margin_top = 3.0
-margin_right = 155.0
-margin_bottom = 17.0
+[node name="ModeLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 233.0
+margin_right = 273.0
+margin_bottom = 14.0
 text = "Mode:"
 
-[node name="OptionButton" type="OptionButton" parent="VBoxContainer/HBoxContainer"]
-margin_left = 159.0
-margin_right = 217.0
-margin_bottom = 20.0
-text = "Save"
-items = [ "Save", null, false, 0, null, "Load", null, false, 1, null, "Erase", null, false, 2, null ]
-selected = 0
-
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 24.0
+margin_top = 18.0
 margin_right = 400.0
-margin_bottom = 28.0
+margin_bottom = 22.0
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+margin_top = 26.0
+margin_right = 400.0
+margin_bottom = 57.0
+text = "asd asdasd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd"
+autowrap = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 32.0
+margin_top = 61.0
 margin_right = 400.0
 margin_bottom = 712.0
 size_flags_horizontal = 3
@@ -74,11 +77,22 @@ __meta__ = {
 
 [node name="SaveConfirmationDialog" type="ConfirmationDialog" parent="."]
 visible = true
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 404.0
-margin_bottom = 716.0
+margin_left = -5.61084
+margin_top = 166.316
+margin_right = 394.389
+margin_bottom = 306.316
 rect_min_size = Vector2( 400, 140 )
+window_title = "Overwrite node template"
 dialog_text = "Are you sure you want to overwrite node template?"
-[connection signal="item_selected" from="VBoxContainer/HBoxContainer/OptionButton" to="." method="_on_OptionButton_item_selected"]
+
+[node name="EraseConfirmationDialog" type="ConfirmationDialog" parent="."]
+visible = true
+margin_left = -41.9185
+margin_top = 361.737
+margin_right = 358.082
+margin_bottom = 501.737
+rect_min_size = Vector2( 400, 140 )
+window_title = "Erase node template"
+dialog_text = "Are you sure you want to erase node template?"
 [connection signal="confirmed" from="SaveConfirmationDialog" to="." method="_on_SaveConfirmationDialog_confirmed"]
+[connection signal="confirmed" from="EraseConfirmationDialog" to="." method="_on_EraseConfirmationDialog_confirmed"]

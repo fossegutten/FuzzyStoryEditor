@@ -1,7 +1,16 @@
 extends TextureButton
 
 
+onready var popup_menu : PopupMenu = $PopupMenu
+
 var template : Dictionary = {} setget set_template, get_template
+
+
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == BUTTON_RIGHT:
+			
+			popup_menu.popup(Rect2(get_global_mouse_position(), popup_menu.rect_size))
 
 
 func set_template(value : Dictionary) -> void:

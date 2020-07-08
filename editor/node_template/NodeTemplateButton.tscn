@@ -25,3 +25,15 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+visible = true
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = 0.993454
+margin_right = 198.0
+margin_bottom = 70.9935
+items = [ "Load", null, 0, false, false, 0, 0, null, "", false, "Copy", null, 0, false, false, 1, 0, null, "", false, "Delete", null, 0, false, false, 2, 0, null, "", false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
